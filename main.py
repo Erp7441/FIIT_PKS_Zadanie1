@@ -3,17 +3,50 @@
 # YAML --> Ruamel
 # Na otvorenie pcap súborov použite knižnice libpcap pre linux/BSD a winpcap pre Windows.
 
-from FrameFactory import FrameFactory
 from Pcap import Pcap
 
-pcap_file = Pcap('./samples/eth-1.pcap')
+#pcap_file = Pcap('./samples/eth-1.pcap')
+pcap_file = Pcap('./samples/trace-25.pcap') # 20
 
 # TODO:: Check PKS github resources and PDFs
+
+
+
+pass
+
+
+
+
+
+
+
+
+
+
 
 # Pokial tato cast obsahuje 2 bajtov obsahuje EtherType ide o Ethernet II packet.
 # If it is >= 1536 (0x0600) then it is an Ethernet II frame and that field is interpreted as an EtherType field.
 # If it is <= 1500 it is an 802.3 frame and that field is interpreted as a Length field.
 # https://notes.networklessons.com/ethernet-frame-types
+
+# Frame explanations
+# Destination Address [0:12]
+# Soruce Address [12:24]
+# EtherType [24:28]
+# Length [24:28]
+
+# RAW Logical link Header
+# IPX Header [28:34] (full of FFFFF)
+
+# LLC Logical link headr
+# DSAP [28:30]
+# SSAP [30:32]
+# Control [32:34]
+
+# SNAP header
+# Vendor Code [34:40]
+# EtherType [40:44] (pre 802)
+
 
 pass
 

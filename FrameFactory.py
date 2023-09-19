@@ -1,5 +1,5 @@
-from FrameEOT import FrameEOT
-from FrameEthernet import FrameEthernet
+from frames.FrameEOT import FrameEOT
+from frames.FrameEthernet import FrameEthernet
 
 
 class FrameFactory:
@@ -9,7 +9,6 @@ class FrameFactory:
     @staticmethod
     def create_frame(frame_number, packet):
         frame_type = FrameFactory.extract_ether_frame_type(packet)
-
         # Handling undefined frame types
         if not frame_type:
             return
@@ -23,12 +22,14 @@ class FrameFactory:
         if frame_type == "Ethernet II":
             return FrameEthernet(frame_number, macs[0], macs[1], length, wire_length, packet)
         elif frame_type == "802.3":
-            # TODO:: LLC, etc...
-            return FrameEOT(frame_number, macs[0], macs[1], length, wire_length, packet)
+            # TODO:: LLC, etc...no
+            return FrameFactory.create_eot_frame(frame_number, macs[0], macs[1], length, wire_length, packet)
 
     @staticmethod
-    def create_eot_llc_frame(self):
-        # TODO:: Implement
+    def create_eot_frame(frame_number, src, dest, length, wire_length, packet):
+        packet_bytes = packet.original.hex()
+
+
         pass
 
     @staticmethod

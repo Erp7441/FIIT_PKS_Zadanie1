@@ -6,7 +6,7 @@ from FrameFactory import FrameFactory
 
 class Pcap:
     def __init__(self, path: str):
-        file = path #! TODO:: replace with npcap
+        file = rdpcap(path) #! TODO:: replace with npcap
         self.name = file.listname
         self.stats = file.stats
         self.frames = []

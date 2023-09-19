@@ -1,28 +1,32 @@
 from scapy.all import rdpcap
+from FrameCreator import FrameCreator
 
 
 class Pcap:
     def __init__(self, path: str):
-        file = rdpcap(path)
+        file = rdpcap(path) #! TODO:: replace with npcap
         self.name = file.listname
         self.stats = file.stats
-        self.packets = file.res
+        self.frames = []
 
-    def print(self):
-        for index, packet in enumerate(self.packets):
-            # Výpis všetkých rámcov v hexadecimálnom tvare postupne tak, ako boli zaznamenané v súbore.
+        for index, entry in enumerate(file.res):
+            self.frames.append(FrameCreator.create_frame(index, entry))
+
+    def print_frames(self):
+        pass
+
+            # TODO:: Remove legacy code
+            # packet_bytes = packet.original.hex()
             #
-            # Pre každý rámec uveďte:
+            # print("ID:", index)
+            # print("Length:", int(len(packet)/2)) #?
+            # print("Wire Length:", packet.wirelen)
             #
-            # a) Poradové číslo rámca v analyzovanom súbore.
             #
-            # b) Dĺžku rámca v bajtoch poskytnutú pcap API, ako aj dĺžku tohto rámca prenášaného po médiu. (tieto hodnoty nemusia byť rovnaké)
+            # print("Frame type:", packet_bytes[24:28])
             #
-            # c) Typ rámca: Ethernet II, IEEE 802.3 (IEEE 802.3 s LLC, IEEE 802.3 s LLC a SNAP, IEEE 802.3 -- Raw).
-            #
-            # d) Pre IEEE 802.3 s LLC uviesť aj Service Access Point (SAP) napr. STP, CDP, IPX, SAP ...
-            #
-            # e) Pre IEEE 802.3 s LLC a SNAP uviesť aj PID napr. AppleTalk, CDP, DTP ...
-            #
-            # f) Zdrojovú a cieľovú fyzickú (MAC) adresu uzlov, medzi ktorými je rámec prenášaný.
-            print(str(index) + "." + str(packet.wirelen))
+            # print("Source MAC:", packet_bytes[0:12])
+            # print("Destination MAC:", packet_bytes[12:24])
+            # print ("Packet content: ", packet_bytes)
+
+

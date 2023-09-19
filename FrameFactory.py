@@ -2,23 +2,23 @@ from FrameEOT import FrameEOT
 from FrameEthernet import FrameEthernet
 
 
-class FrameCreator:
+class FrameFactory:
     def __new__(cls):
         raise TypeError("Static only class!")
 
     @staticmethod
     def create_frame(frame_number, packet):
-        frame_type = FrameCreator.extract_ether_frame_type(packet)
+        frame_type = FrameFactory.extract_ether_frame_type(packet)
 
         # Handling undefined frame types
         if not frame_type:
             return
 
         # 0 index is source, 1 index is dest
-        macs = FrameCreator.extract_mac_addresses(packet)
+        macs = FrameFactory.extract_mac_addresses(packet)
 
-        length = FrameCreator.get_frame_length(packet)
-        wire_length = FrameCreator.get_frame_length(packet, True)
+        length = FrameFactory.get_frame_length(packet)
+        wire_length = FrameFactory.get_frame_length(packet, True)
 
         if frame_type == "Ethernet II":
             return FrameEthernet(frame_number, macs[0], macs[1], length, wire_length, packet)

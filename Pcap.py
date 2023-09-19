@@ -1,16 +1,18 @@
 from scapy.all import rdpcap
-from FrameCreator import FrameCreator
+from FrameFactory import FrameFactory
+
+
 
 
 class Pcap:
     def __init__(self, path: str):
-        file = rdpcap(path) #! TODO:: replace with npcap
+        file = path #! TODO:: replace with npcap
         self.name = file.listname
         self.stats = file.stats
         self.frames = []
 
         for index, entry in enumerate(file.res):
-            self.frames.append(FrameCreator.create_frame(index, entry))
+            self.frames.append(FrameFactory.create_frame(index, entry))
 
     def print_frames(self):
         pass

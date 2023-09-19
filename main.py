@@ -3,7 +3,7 @@
 # YAML --> Ruamel
 # Na otvorenie pcap súborov použite knižnice libpcap pre linux/BSD a winpcap pre Windows.
 
-from FrameCreator import FrameCreator
+from FrameFactory import FrameFactory
 from Pcap import Pcap
 
 pcap_file = Pcap('./samples/eth-1.pcap')

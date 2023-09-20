@@ -2,6 +2,8 @@ from frames.FrameEOT import FrameEOT
 from frames.FrameEthernet import FrameEthernet
 from frames.FrameLCC import FrameLCC
 from frames.FrameSNAP import FrameSNAP
+from frames.FrameRAW import FrameRAW
+
 
 class FrameFactory:
     def __new__(cls):
@@ -10,6 +12,7 @@ class FrameFactory:
     @staticmethod
     def create_frame(frame_number, packet):
         frame_type = FrameFactory.extract_ether_frame_type(packet)
+
         # Handling undefined frame types
         if not frame_type:
             return
@@ -17,31 +20,26 @@ class FrameFactory:
         # 0 index is source, 1 index is dest
         macs = FrameFactory.extract_mac_addresses(packet)
 
-        length = FrameFactory.get_frame_length(packet) # TODO:: check length
+        length = FrameFactory.get_frame_length(packet)  # TODO:: check length
         wire_length = FrameFactory.get_frame_length(packet, True)
 
+        # Ethernet II Frame
         if frame_type == "Ethernet II":
             return FrameEthernet(frame_number, macs[0], macs[1], length, wire_length, packet)
+        # 802.3 Frame
         elif frame_type == "802.3":
-            # TODO:: LLC, etc...no
             return FrameFactory.create_eot_frame(frame_number, macs[0], macs[1], length, wire_length, packet)
 
     @staticmethod
     def create_eot_frame(frame_number, src, dest, length, wire_length, packet):
         packet_bytes = packet.original.hex()
-        # LLC Logical link headr
-        # DSAP [28:30]
-        # SSAP [30:32]
-        # Control [32:34]
-
-
 
         # LLC SNAP
         if FrameFactory.check_snap(packet_bytes):
             return FrameSNAP(frame_number, src, dest, length, wire_length, packet)
-        # RAW
+        # 802 RAW
         elif FrameFactory.check_raw(packet_bytes):
-            return FrameEOT(frame_number, src, dest, length, wire_length, packet)
+            return FrameRAW(frame_number, src, dest, length, wire_length, packet)
         # LLC
         else:
             return FrameLCC(frame_number, src, dest, length, wire_length, packet)
@@ -79,19 +77,13 @@ class FrameFactory:
 
     @staticmethod
     def check_snap(packet_bytes):
-        dsap = int(packet_bytes[28:30], 16)
-        ssap = int(packet_bytes[30:32], 16)
-        control = int(packet_bytes[32:34], 16)
-        check = dsap + ssap + control
-        # SNAP header
-        # Vendor Code [34:40]
-        # EtherType [40:44] (pre 802)
-
-        
-        # TODO:: Add Vendor code and EtherType
-        return check == 43690
+        dsap = packet_bytes[28:30]
+        ssap = packet_bytes[30:32]
+        control = packet_bytes[32:34]
+        return (dsap == "aa") and (ssap == "aa") and (control == "03")
 
     @staticmethod
     def check_raw(packet_bytes):
-        ipx_header = int(packet_bytes[28:34], 16)
-        return ipx_header == 16777215
+        ipx_header_p1 = packet_bytes[28:30]
+        ipx_header_p2 = packet_bytes[30:32]
+        return (ipx_header_p1 == "ff") and (ipx_header_p2 == "ff")

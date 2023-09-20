@@ -1,4 +1,4 @@
-from frames.FrameEOT import FrameEOT
+
 from frames.FrameEthernet import FrameEthernet
 from frames.FrameLCC import FrameLCC
 from frames.FrameSNAP import FrameSNAP
@@ -13,7 +13,7 @@ class FrameFactory:
     def create_frame(frame_number, packet):
         frame_type = FrameFactory.extract_ether_frame_type(packet)
 
-        # Handling undefined frame types
+        # Handling undefined frame utils
         if not frame_type:
             return
 

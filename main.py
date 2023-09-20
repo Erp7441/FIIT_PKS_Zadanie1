@@ -10,17 +10,10 @@ pcap_file = Pcap('./samples/trace-26.pcap') # 20
 
 # TODO:: Check PKS github resources and PDFs
 
-# 18. packet 26. subor
+# 18. packet 26. subor (ILS)
 # 38. packet 25. subor
 
 pass
-
-
-
-
-
-
-
 
 
 

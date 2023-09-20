@@ -16,7 +16,7 @@ class FrameFactory:
         # 0 index is source, 1 index is dest
         macs = FrameFactory.extract_mac_addresses(packet)
 
-        length = FrameFactory.get_frame_length(packet)
+        length = FrameFactory.get_frame_length(packet) # TODO:: check length
         wire_length = FrameFactory.get_frame_length(packet, True)
 
         if frame_type == "Ethernet II":

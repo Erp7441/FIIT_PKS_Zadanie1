@@ -1,4 +1,4 @@
-from FrameLCC import FrameLCC
+from frames.FrameLCC import FrameLCC
 
 
 class FrameSNAP(FrameLCC):

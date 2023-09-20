@@ -6,11 +6,11 @@
 from Pcap import Pcap
 
 #pcap_file = Pcap('./samples/eth-1.pcap')
-pcap_file = Pcap('./samples/trace-25.pcap') # 20
+pcap_file = Pcap('./samples/trace-26.pcap') # 20
 
 # TODO:: Check PKS github resources and PDFs
 
-
+# 18. packet 26. subor
 
 pass
 

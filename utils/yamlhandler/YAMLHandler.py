@@ -1,6 +1,11 @@
 from ruamel.yaml import YAML
-import collections
+
 from Pcap import Pcap
+
+
+def strip_end(stream):
+    if stream.endswith('...\n'):
+        return str(stream[:-4]).rstrip("\n")
 
 
 class YAMLHandler:
@@ -11,7 +16,6 @@ class YAMLHandler:
     yaml = YAML()
     yaml.indent(mapping=2, sequence=4, offset=2)
 
-
     # TODO:: remove legacy code
     # Register classes
     # yaml.register_class(Pcap)
@@ -21,10 +25,10 @@ class YAMLHandler:
     # yaml.register_class(FrameRAW)
     # yaml.register_class(FrameLCC)
     # yaml.register_class(FrameSNAP)
-    #yaml.explicit_start = False
-    #yaml.Representer = RoundTripRepresenter
-    #yaml.compact(seq_seq=False, seq_map=False)
-    #yaml.preserve_quotes = False
+    # yaml.explicit_start = False
+    # yaml.Representer = RoundTripRepresenter
+    # yaml.compact(seq_seq=False, seq_map=False)
+    # yaml.preserve_quotes = False
 
     @staticmethod
     def export_pcap(pcap_file: Pcap, path_to_yaml_file: str):
@@ -40,14 +44,12 @@ class YAMLHandler:
         packets_dict_list = YAMLHandler.sort_dictionary(packets_dict_list)
         pcap_file_dict["packets"] = packets_dict_list
 
-
         with open(path_to_yaml_file, "w") as file:
-            YAMLHandler.yaml.dump(pcap_file_dict, file)
+            # Dumping YAML
+            YAMLHandler.yaml.dump(pcap_file_dict, file, transform=strip_end)
             file.close()
 
         YAMLHandler.format_yaml(path_to_yaml_file)
-
-
 
     @staticmethod
     def format_yaml(path_to_yaml_file: str):
@@ -62,8 +64,7 @@ class YAMLHandler:
         with open(path_to_yaml_file, "w") as file:
             file.write(data)
 
-        # Reordering attributes
-
+    # Reordering attributes
     @staticmethod
     def sort_dictionary(packets_dict_list):
         order = [

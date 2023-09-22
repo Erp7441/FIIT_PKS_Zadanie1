@@ -1,5 +1,5 @@
 from frames.FrameEOT import FrameEOT
-
+from utils.bytehandler.ByteHandler import ByteHandler
 
 class FrameRAW(FrameEOT):
     def __init__(self, frame_number, src, dest, length, wire_length, packet):
@@ -8,4 +8,4 @@ class FrameRAW(FrameEOT):
         self.type = "Novell" + self.type
 
         packet_bytes = packet.original.hex()
-        self.checksum = packet_bytes[28:32]
+        self.checksum = ByteHandler.load_bytes_range(packet_bytes, 14, 16)

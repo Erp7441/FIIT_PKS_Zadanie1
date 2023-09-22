@@ -1,8 +1,8 @@
-
 from frames.FrameEthernet import FrameEthernet
 from frames.FrameLCC import FrameLCC
 from frames.FrameSNAP import FrameSNAP
 from frames.FrameRAW import FrameRAW
+from utils.bytehandler.ByteHandler import ByteHandler
 
 
 class FrameFactory:
@@ -47,14 +47,14 @@ class FrameFactory:
     @staticmethod
     def extract_mac_addresses(packet):
         packet_bytes = packet.original.hex()
-        source_mac = packet_bytes[0:12]
-        destination_mac = packet_bytes[12:24]
+        source_mac = ByteHandler.load_bytes_range(packet_bytes, 0, 6)
+        destination_mac = ByteHandler.load_bytes_range(packet_bytes, 6, 12)
         return source_mac, destination_mac
 
     @staticmethod
     def extract_ether_frame_type(packet):
         packet_bytes = packet.original.hex()
-        type_bytes = packet_bytes[24:28]
+        type_bytes = ByteHandler.load_bytes_range(packet_bytes, 12, 13)
         type_bytes = int(type_bytes, 16)
 
         if type_bytes >= 1536:
@@ -77,13 +77,13 @@ class FrameFactory:
 
     @staticmethod
     def check_snap(packet_bytes):
-        dsap = packet_bytes[28:30]
-        ssap = packet_bytes[30:32]
-        control = packet_bytes[32:34]
+        dsap = ByteHandler.load_bytes(packet_bytes, 14)
+        ssap = ByteHandler.load_bytes(packet_bytes, 15)
+        control = ByteHandler.load_bytes(packet_bytes, 16)
         return (dsap == "aa") and (ssap == "aa") and (control == "03")
 
     @staticmethod
     def check_raw(packet_bytes):
-        ipx_header_p1 = packet_bytes[28:30]
-        ipx_header_p2 = packet_bytes[30:32]
+        ipx_header_p1 = ByteHandler.load_bytes(packet_bytes, 14)
+        ipx_header_p2 = ByteHandler.load_bytes(packet_bytes, 15)
         return (ipx_header_p1 == "ff") and (ipx_header_p2 == "ff")

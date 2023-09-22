@@ -1,0 +1,15 @@
+{
+  "str_to_hex": {
+    "CDP": "0x2000",
+    "DTP": "0x2004",
+    "PVSTP+": "0x010B",
+    "AppleTalk": "0x809B"
+  },
+
+  "hex_to_str": {
+    "0x2000": "CDP",
+    "0x2004": "DTP",
+    "0x010B": "PVSTP+",
+    "0x809B": "AppleTalk"
+  }
+}

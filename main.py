@@ -13,9 +13,20 @@ pcap_file = Pcap('./samples/trace-26.pcap') # 20
 # 18. packet 26. subor (ILS)
 # 38. packet 25. subor
 
+bytes = pcap_file.frames[0].packet.original.hex()
+
+from utils.bytehandler.ByteHandler import ByteHandler
+
+test = ByteHandler.load_bytes_range(bytes, 6, 12)
+print(test)
+
+test = ByteHandler.load_bytes_range(bytes, 0, 6)
+print(test)
+
 pass
 
-
+# TODO:: Ask about ISL?
+# Pre toto toto mi dopln toto a vypis to do yaml. Mozu sa tam vyskytnut protokoly.
 
 
 # Pokial tato cast obsahuje 2 bajtov obsahuje EtherType ide o Ethernet II packet.

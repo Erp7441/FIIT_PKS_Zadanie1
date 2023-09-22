@@ -1,0 +1,12 @@
+{
+  "hex_to_str" : {
+    "0xE0": "IPX",
+    "0xF0": "NETBIOS",
+    "0x42": "STP"
+  },
+  "str_to_hex": {
+    "IPX": "0xE0",
+    "NETBIOS": "0xF0",
+    "STP": "0x42"
+  }
+}

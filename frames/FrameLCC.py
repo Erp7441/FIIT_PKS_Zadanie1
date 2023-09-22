@@ -1,4 +1,5 @@
 from frames.FrameEOT import FrameEOT
+from utils.bytehandler.ByteHandler import ByteHandler
 
 
 class FrameLCC(FrameEOT):
@@ -7,6 +8,6 @@ class FrameLCC(FrameEOT):
         self.type += " LCC"
 
         packet_bytes = packet.original.hex()
-        self.dsap = packet_bytes[28:30]
-        self.ssap = packet_bytes[30:32]
-        self.control = packet_bytes[32:34]
+        self.dsap = ByteHandler.load_bytes(packet_bytes, 14)
+        self.ssap = ByteHandler.load_bytes(packet_bytes, 15)
+        self.control = ByteHandler.load_bytes(packet_bytes, 16)

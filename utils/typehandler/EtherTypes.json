@@ -1,0 +1,17 @@
+{
+  "str_to_hex": {
+    "IPv4": "0x0800",
+    "IPv6": "0x86DD",
+    "ARP": "0x0806",
+    "LLDP": "0x88CC",
+    "ETCP": "0x9000"
+  },
+
+  "hex_to_str": {
+    "0x0800": "IPv4",
+    "0x86DD": "IPv6",
+    "0x0806": "ARP",
+    "0x88CC": "LLDP",
+    "0x9000": "ETCP"
+  }
+}

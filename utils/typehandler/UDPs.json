@@ -1,0 +1,41 @@
+{
+  "dec_to_str": {
+    "37": "TIME",
+    "53": "DNS",
+    "67": "DHCP",
+    "68": "DHCP",
+    "69": "TFTP",
+    "80": "HTTP",
+    "137": "NETBIOS-NS",
+    "138": "NETBIOS-DGM",
+    "161": "SNMP",
+    "162": "SNMP-TRAP",
+    "443": "HTTPS",
+    "514": "SYSLOG",
+    "520": "RIP",
+    "1900": "SSDP",
+    "5353": "MDNS",
+    "17500": "DB-LSP-DISC",
+    "33434": "TRACEROUTE"
+  },
+
+  "str_to_dec": {
+    "TIME": "37",
+    "DNS": "53",
+    "DHCP": "67",
+    "DHCP": "68",
+    "TFTP": "69",
+    "HTTP": "80",
+    "NETBIOS-NS": "137",
+    "NETBIOS-DGM": "138",
+    "SNMP": "161",
+    "SNMP-TRAP": "162",
+    "HTTPS": "443",
+    "SYSLOG": "514",
+    "RIP": "520",
+    "SSDP": "1900",
+    "MDNS": "5353",
+    "DB-LSP-DISC": "17500",
+    "TRACEROUTE": "33434"
+  }
+}

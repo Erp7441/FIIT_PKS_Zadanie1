@@ -5,9 +5,11 @@ import argparse
 import os.path
 import re
 import sys
+
 import yamale
 from yamale.validators import DefaultValidators, Validator
 from yamale.yamale_error import YamaleError
+
 
 class Hexdump(Validator):
     """ Custom Date validator """

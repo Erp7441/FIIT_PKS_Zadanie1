@@ -1,11 +1,14 @@
+from utils.formathandler.FormatHandler import FormatHandler
+
 class Frame:
-    def __init__(self, frame_number, src, dest, length, wire_length, packet):
+    def __init__(self, frame_number, src_mac, dest_mac, length, wire_length, packet):
         self.frame_number = frame_number
-        self.src = src
-        self.dest = dest
-        self.length = length
-        self.wire_length = wire_length
-        self.packet = packet
+        self.len_frame_pcap = length
+        self.len_frame_medium = wire_length
+        self.src_mac = FormatHandler.format_mac(src_mac)
+        self.dst_mac = FormatHandler.format_mac(dest_mac)
+        self.hexa_frame = FormatHandler.format_hex_field(packet.original.hex())
+
 
     def print(self):
         pass

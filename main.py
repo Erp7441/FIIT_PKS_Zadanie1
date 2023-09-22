@@ -4,24 +4,31 @@
 # Na otvorenie pcap súborov použite knižnice libpcap pre linux/BSD a winpcap pre Windows.
 
 from Pcap import Pcap
+from utils.yamlhandler.YAMLHandler import YAMLHandler
+
 
 #pcap_file = Pcap('./samples/eth-1.pcap')
 pcap_file = Pcap('./samples/trace-26.pcap') # 20
+
+YAMLHandler.export_pcap(pcap_file, "./YAML.yaml")
+
+
+# from scapy.utils import hexdump
+# t = pcap_file.packets[0].hexa_frame
+#
+# test = hexdump(t, dump=True)
+# reg= re.search("([ ]{2}.*[ ]{2})", test).group().strip()
+#
+
+
+
 
 # TODO:: Check PKS github resources and PDFs
 
 # 18. packet 26. subor (ILS)
 # 38. packet 25. subor
 
-bytes = pcap_file.frames[0].packet.original.hex()
 
-from utils.bytehandler.ByteHandler import ByteHandler
-
-test = ByteHandler.load_bytes_range(bytes, 6, 12)
-print(test)
-
-test = ByteHandler.load_bytes_range(bytes, 0, 6)
-print(test)
 
 pass
 

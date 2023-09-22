@@ -1,7 +1,7 @@
 from frames.FrameEthernet import FrameEthernet
 from frames.FrameLCC import FrameLCC
-from frames.FrameSNAP import FrameSNAP
 from frames.FrameRAW import FrameRAW
+from frames.FrameSNAP import FrameSNAP
 from utils.bytehandler.ByteHandler import ByteHandler
 
 
@@ -47,8 +47,8 @@ class FrameFactory:
     @staticmethod
     def extract_mac_addresses(packet):
         packet_bytes = packet.original.hex()
-        source_mac = ByteHandler.load_bytes_range(packet_bytes, 0, 6)
-        destination_mac = ByteHandler.load_bytes_range(packet_bytes, 6, 12)
+        source_mac = ByteHandler.load_bytes_range(packet_bytes, 0, 5)
+        destination_mac = ByteHandler.load_bytes_range(packet_bytes, 6, 11)
         return source_mac, destination_mac
 
     @staticmethod

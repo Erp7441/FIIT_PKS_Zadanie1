@@ -7,8 +7,8 @@ class ByteHandler:
     def load_bytes(field, index: int):
         index *= 2
         end = index + 2
-        return field[index:end]
+        return field[index:end].upper()
 
     @staticmethod
     def load_bytes_range(field, start: int, end: int):
-        return field[start*2:(end+1)*2]
+        return field[start*2:(end+1)*2].upper()

@@ -1,6 +1,6 @@
 from frames.FrameEOT import FrameEOT
-from utils.bytehandler.ByteHandler import ByteHandler
-from utils.typehandler.TypeHandler import TypeHandler
+from handlers.ByteHandler import ByteHandler
+from handlers.typehandler.TypeHandler import TypeHandler
 
 class FrameLCC(FrameEOT):
     def __init__(self, frame_number, src, dest, length, wire_length, packet):

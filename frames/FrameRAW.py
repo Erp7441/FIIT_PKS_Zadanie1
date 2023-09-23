@@ -1,5 +1,5 @@
 from frames.FrameEOT import FrameEOT
-from utils.bytehandler.ByteHandler import ByteHandler
+from handlers.ByteHandler import ByteHandler
 
 class FrameRAW(FrameEOT):
     def __init__(self, frame_number, src, dest, length, wire_length, packet):

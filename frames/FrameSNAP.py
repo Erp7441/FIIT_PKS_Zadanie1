@@ -1,6 +1,6 @@
 from frames.FrameLCC import FrameLCC
-from utils.bytehandler.ByteHandler import ByteHandler
-from utils.typehandler.TypeHandler import TypeHandler
+from handlers.ByteHandler import ByteHandler
+from handlers.typehandler.TypeHandler import TypeHandler
 
 
 class FrameSNAP(FrameLCC):

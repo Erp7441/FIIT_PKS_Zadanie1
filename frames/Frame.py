@@ -1,8 +1,8 @@
-from utils.formathandler.FormatHandler import FormatHandler
+from handlers.FormatHandler import FormatHandler
 
 class Frame:
     def __init__(self, frame_number, src_mac, dest_mac, length, wire_length, packet):
-        self.frame_number = frame_number
+        self.frame_number = frame_number + 1
         self.len_frame_pcap = length
         self.len_frame_medium = wire_length
         self.src_mac = FormatHandler.format_mac(src_mac)

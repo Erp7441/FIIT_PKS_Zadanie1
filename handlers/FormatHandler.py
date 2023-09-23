@@ -2,7 +2,7 @@ import re
 
 import ruamel.yaml.scalarstring
 
-from utils.bytehandler.ByteHandler import ByteHandler
+from handlers.ByteHandler import ByteHandler
 
 
 class FormatHandler:
@@ -36,6 +36,7 @@ class FormatHandler:
 
         return ruamel.yaml.scalarstring.PreservedScalarString(formatted_field)
 
+        # TODO:: remove legacy code
         # dump = hexdump(hex_field, dump=True)
         # split = dump.split("\n")
         # formatted_field = []
@@ -46,6 +47,6 @@ class FormatHandler:
         # formatted_field = "\n".join(formatted_field)
         # return formatted_field
 
-# TODO:: remove legacy code
+
 
 

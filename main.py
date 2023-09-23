@@ -1,19 +1,80 @@
+from Pcap import Pcap
+from handlers.YAMLHandler import YAMLHandler
+from datetime import datetime
+
+date_and_time = datetime.now().strftime("%d-%M-%Y_%H-%M-%S")
+pcap_file = Pcap('./samples/trace-26.pcap')
+YAMLHandler.export_pcap(pcap_file, "./export/YAML_"+date_and_time+".yaml")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Packet class
 # Frame class
 # YAML --> Ruamel
 # Na otvorenie pcap súborov použite knižnice libpcap pre linux/BSD a winpcap pre Windows.
 
-from Pcap import Pcap
-from utils.yamlhandler.YAMLHandler import YAMLHandler
-
 
 #pcap_file = Pcap('./samples/eth-1.pcap')
-pcap_file = Pcap('./samples/trace-26.pcap') # 20
-
-YAMLHandler.export_pcap(pcap_file, "./YAML.yaml")
-
-
-# from scapy.utils import hexdump
+# from scapy.handlers import hexdump
 # t = pcap_file.packets[0].hexa_frame
 #
 # test = hexdump(t, dump=True)

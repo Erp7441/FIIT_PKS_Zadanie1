@@ -8,13 +8,13 @@ class TypeHandler:
     def __new__(cls):
         raise TypeError("Static only class!")
 
-    ether_dict = json.load(open(cwd + "\\EtherTypes.json"))
-    sap_dict = json.load(open(cwd + "\\SAPs.json"))
-    vendors_dict = json.load(open(cwd + "\\Vendors.json"))
-    pids_dict = json.load(open(cwd + "\\PIDs.json"))
-    ipv4_dict = json.load(open(cwd + "\\IPV4s.json"))
-    tcp_dict = json.load(open(cwd + "\\TCPs.json"))
-    udp_dict = json.load(open(cwd + "\\UDPs.json"))
+    ether_dict = json.load(open(cwd + "\\types\\EtherTypes.json"))
+    sap_dict = json.load(open(cwd + "\\types\\SAPs.json"))
+    vendors_dict = json.load(open(cwd + "\\types\\Vendors.json"))
+    pids_dict = json.load(open(cwd + "\\types\\PIDs.json"))
+    ipv4_dict = json.load(open(cwd + "\\types\\IPV4s.json"))
+    tcp_dict = json.load(open(cwd + "\\types\\TCPs.json"))
+    udp_dict = json.load(open(cwd + "\\types\\UDPs.json"))
 
     @staticmethod
     def find_ether_type_str(hex: str):

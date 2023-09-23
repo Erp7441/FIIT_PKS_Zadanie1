@@ -2,7 +2,7 @@ from frames.FrameEthernet import FrameEthernet
 from frames.FrameLCC import FrameLCC
 from frames.FrameRAW import FrameRAW
 from frames.FrameSNAP import FrameSNAP
-from utils.bytehandler.ByteHandler import ByteHandler
+from handlers.FrameHandler import FrameHandler
 
 
 class FrameFactory:
@@ -13,7 +13,7 @@ class FrameFactory:
     def create_frame(frame_number, packet):
         frame_type = FrameFactory.extract_ether_frame_type(packet)
 
-        # Handling undefined frame utils
+        # Handling undefined frame handlers
         if not frame_type:
             return
 
@@ -47,14 +47,14 @@ class FrameFactory:
     @staticmethod
     def extract_mac_addresses(packet):
         packet_bytes = packet.original.hex()
-        source_mac = ByteHandler.load_bytes_range(packet_bytes, 0, 5)
-        destination_mac = ByteHandler.load_bytes_range(packet_bytes, 6, 11)
+        source_mac = FrameHandler.parse_src_mac(packet_bytes)
+        destination_mac = FrameHandler.parse_dst_mac(packet_bytes)
         return source_mac, destination_mac
 
     @staticmethod
     def extract_ether_frame_type(packet):
         packet_bytes = packet.original.hex()
-        type_bytes = ByteHandler.load_bytes_range(packet_bytes, 12, 13)
+        type_bytes = FrameHandler.parse_type(packet_bytes)
         type_bytes = int(type_bytes, 16)
 
         if type_bytes >= 1536:
@@ -72,18 +72,16 @@ class FrameFactory:
         if not wire:
             return int(len(packet) / 2)
         else:
-            # Return packet length on wire
-            return packet.wirelen
+            return len(packet)
 
     @staticmethod
     def check_snap(packet_bytes):
-        dsap = ByteHandler.load_bytes(packet_bytes, 14)
-        ssap = ByteHandler.load_bytes(packet_bytes, 15)
-        control = ByteHandler.load_bytes(packet_bytes, 16)
+        dsap = FrameHandler.parse_dsap(packet_bytes)
+        ssap = FrameHandler.parse_ssap(packet_bytes)
+        control = FrameHandler.parse_control(packet_bytes)
         return (dsap.upper() == "AA") and (ssap.upper() == "AA") and (control == "03")
 
     @staticmethod
     def check_raw(packet_bytes):
-        ipx_header_p1 = ByteHandler.load_bytes(packet_bytes, 14)
-        ipx_header_p2 = ByteHandler.load_bytes(packet_bytes, 15)
-        return (ipx_header_p1 == "ff") and (ipx_header_p2 == "ff")
+        ipx_header = FrameHandler.parse_ipx_header(packet_bytes)
+        return (ipx_header[0].upper() == "FF") and (ipx_header[1].upper() == "FF")

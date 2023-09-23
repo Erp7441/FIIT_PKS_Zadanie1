@@ -25,8 +25,10 @@ class TypeHandler:
         return TypeHandler.ether_dict["str_to_hex"][str]
 
     @staticmethod
-    def find_sap_str(hex: str):
-        return TypeHandler.sap_dict["hex_to_str"]["0x" + hex.upper()]
+    def find_sap_str(dsap: str, ssap: str):
+        if dsap != ssap:
+            return None
+        return TypeHandler.sap_dict["hex_to_str"]["0x" + dsap.upper()]
 
     @staticmethod
     def find_sap_hex(str: str):

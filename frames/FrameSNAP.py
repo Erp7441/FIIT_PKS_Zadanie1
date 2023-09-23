@@ -11,9 +11,9 @@ class FrameSNAP(FrameLCC):
         packet_bytes = packet.original.hex()
         self.vendor = TypeHandler.find_vendor_str(ByteHandler.load_bytes_range(packet_bytes, 17, 19))
 
-        # TODO:: ISL frame handling
         try:
             self.pid = TypeHandler.find_pid_str(ByteHandler.load_bytes_range(packet_bytes, 20, 21))
         except (IndentationError, KeyError):
-            self.pid = ByteHandler.load_bytes_range(packet_bytes, 20, 21)
+            # TODO:: ISL frame handling?
+            pass
 

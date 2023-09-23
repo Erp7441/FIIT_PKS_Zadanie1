@@ -80,7 +80,7 @@ class FrameFactory:
         dsap = ByteHandler.load_bytes(packet_bytes, 14)
         ssap = ByteHandler.load_bytes(packet_bytes, 15)
         control = ByteHandler.load_bytes(packet_bytes, 16)
-        return (dsap == "aa") and (ssap == "aa") and (control == "03")
+        return (dsap.upper() == "AA") and (ssap.upper() == "AA") and (control == "03")
 
     @staticmethod
     def check_raw(packet_bytes):

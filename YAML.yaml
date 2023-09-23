@@ -37,6 +37,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -61,6 +62,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -103,6 +105,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -115,6 +118,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -181,6 +185,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -237,6 +242,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -258,9 +264,10 @@ packets:
   - frame_number: 16
     len_frame_pcap: 30
     len_frame_medium: 60
-    frame_type: IEEE 802.3 LCC
+    frame_type: IEEE 802.3 LCC & SNAP
     src_mac: 01:00:0C:CC:CC:CC
     dst_mac: 00:16:47:02:24:1A
+    pid: DTP
     hexa_frame: |
       01 00 0C CC CC CC 00 16 47 02 24 1A 00 22 AA AA
       03 00 00 0C 20 04 01 00 01 00 05 00 00 02 00 05
@@ -270,7 +277,7 @@ packets:
   - frame_number: 17
     len_frame_pcap: 45
     len_frame_medium: 90
-    frame_type: IEEE 802.3 LCC
+    frame_type: IEEE 802.3 LCC & SNAP
     src_mac: 01:00:0C:00:00:00
     dst_mac: 00:16:47:02:24:1A
     hexa_frame: |
@@ -287,6 +294,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -329,6 +337,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -341,6 +350,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -353,6 +363,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -409,6 +420,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -433,6 +445,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -475,6 +488,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -511,6 +525,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -550,9 +565,10 @@ packets:
   - frame_number: 33
     len_frame_pcap: 224
     len_frame_medium: 449
-    frame_type: IEEE 802.3 LCC
+    frame_type: IEEE 802.3 LCC & SNAP
     src_mac: 01:00:0C:CC:CC:CC
     dst_mac: 00:16:47:02:24:1A
+    pid: CDP
     hexa_frame: |
       01 00 0C CC CC CC 00 16 47 02 24 1A 01 B3 AA AA
       03 00 00 0C 20 00 02 B4 DF A3 00 01 00 0A 53 77
@@ -590,6 +606,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -602,6 +619,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -626,6 +644,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -668,6 +687,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -1431,6 +1451,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -2225,6 +2246,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -2965,6 +2987,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -3714,9 +3737,10 @@ packets:
   - frame_number: 80
     len_frame_pcap: 30
     len_frame_medium: 60
-    frame_type: IEEE 802.3 LCC
+    frame_type: IEEE 802.3 LCC & SNAP
     src_mac: 01:00:0C:CC:CC:CC
     dst_mac: 00:16:47:02:24:1A
+    pid: DTP
     hexa_frame: |
       01 00 0C CC CC CC 00 16 47 02 24 1A 00 22 AA AA
       03 00 00 0C 20 04 01 00 01 00 05 00 00 02 00 05
@@ -3726,7 +3750,7 @@ packets:
   - frame_number: 81
     len_frame_pcap: 45
     len_frame_medium: 90
-    frame_type: IEEE 802.3 LCC
+    frame_type: IEEE 802.3 LCC & SNAP
     src_mac: 01:00:0C:00:00:00
     dst_mac: 00:16:47:02:24:1A
     hexa_frame: |
@@ -3743,6 +3767,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -4677,9 +4702,10 @@ packets:
   - frame_number: 104
     len_frame_pcap: 215
     len_frame_medium: 431
-    frame_type: IEEE 802.3 LCC
+    frame_type: IEEE 802.3 LCC & SNAP
     src_mac: 01:00:0C:CC:CC:CC
     dst_mac: 00:16:47:02:24:1A
+    pid: CDP
     hexa_frame: |
       01 00 0C CC CC CC 00 16 47 02 24 1A 01 A1 AA AA
       03 00 00 0C 20 00 02 B4 D5 DE 00 01 00 0A 53 77
@@ -4715,6 +4741,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -4893,6 +4920,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -5295,6 +5323,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -5604,6 +5633,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -5685,9 +5715,10 @@ packets:
   - frame_number: 170
     len_frame_pcap: 215
     len_frame_medium: 431
-    frame_type: IEEE 802.3 LCC
+    frame_type: IEEE 802.3 LCC & SNAP
     src_mac: 01:00:0C:CC:CC:CC
     dst_mac: 00:16:47:02:24:1A
+    pid: CDP
     hexa_frame: |
       01 00 0C CC CC CC 00 16 47 02 24 1A 01 A1 AA AA
       03 00 00 0C 20 00 02 B4 D5 DE 00 01 00 0A 53 77
@@ -5810,6 +5841,7 @@ packets:
     frame_type: IEEE 802.3 LCC
     src_mac: 01:80:C2:00:00:00
     dst_mac: 00:16:47:02:24:1A
+    sap: STP
     hexa_frame: |
       01 80 C2 00 00 00 00 16 47 02 24 1A 00 26 42 42
       03 00 00 00 00 00 80 01 00 16 47 02 24 00 00 00
@@ -5819,9 +5851,10 @@ packets:
   - frame_number: 177
     len_frame_pcap: 215
     len_frame_medium: 431
-    frame_type: IEEE 802.3 LCC
+    frame_type: IEEE 802.3 LCC & SNAP
     src_mac: 01:00:0C:CC:CC:CC
     dst_mac: 00:16:47:02:24:1A
+    pid: CDP
     hexa_frame: |
       01 00 0C CC CC CC 00 16 47 02 24 1A 01 A1 AA AA
       03 00 00 0C 20 00 02 B4 D5 DE 00 01 00 0A 53 77
@@ -5934,9 +5967,10 @@ packets:
   - frame_number: 182
     len_frame_pcap: 215
     len_frame_medium: 431
-    frame_type: IEEE 802.3 LCC
+    frame_type: IEEE 802.3 LCC & SNAP
     src_mac: 01:00:0C:CC:CC:CC
     dst_mac: 00:16:47:02:24:1A
+    pid: CDP
     hexa_frame: |
       01 00 0C CC CC CC 00 16 47 02 24 1A 01 A1 AA AA
       03 00 00 0C 20 00 02 B4 D5 DE 00 01 00 0A 53 77

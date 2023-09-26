@@ -3,6 +3,7 @@ from handlers.YAMLHandler import YAMLHandler
 from datetime import datetime
 from os import path
 from os import mkdir
+from re import sub
 
 # Creates export dir
 cwd = path.dirname(path.realpath(__file__))
@@ -12,7 +13,8 @@ if not path.exists(cwd + "/export"):
 date_and_time = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
 pcap_file = Pcap('./samples/trace-26.pcap')
 
-yaml_name = pcap_file.pcap_name.replace(".pcap", "")
+yaml_name = pcap_file.pcap_name
+yaml_name = sub('(.*\/)|(\.pcap)', '', yaml_name)
 YAMLHandler.export_pcap(pcap_file, "./export/"+yaml_name+"__"+date_and_time+".yaml")
 
 

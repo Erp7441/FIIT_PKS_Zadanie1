@@ -4,11 +4,11 @@ from handlers.typehandler.TypeHandler import TypeHandler
 
 
 class FrameSNAP(FrameLCC):
-    def __init__(self, frame_number, src, dest, length, wire_length, packet):
-        super().__init__(frame_number, src, dest, length, wire_length, packet)
+    def __init__(self, frame_number, src, dest, length, wire_length, packet, timestamp):
+        super().__init__(frame_number, src, dest, length, wire_length, packet, timestamp)
         self.frame_type += " & SNAP"
 
-        packet_bytes = packet.original.hex()
+        packet_bytes = packet.hex()
         self.vendor = TypeHandler.find_vendor_str(ByteHandler.load_bytes_range(packet_bytes, 17, 19))
 
         try:

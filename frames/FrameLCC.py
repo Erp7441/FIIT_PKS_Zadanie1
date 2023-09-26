@@ -3,11 +3,11 @@ from handlers.ByteHandler import ByteHandler
 from handlers.typehandler.TypeHandler import TypeHandler
 
 class FrameLCC(FrameEOT):
-    def __init__(self, frame_number, src, dest, length, wire_length, packet):
-        super().__init__(frame_number, src, dest, length, wire_length, packet)
-        self.frame_type += " LCC"
+    def __init__(self, frame_number, src, dest, length, wire_length, packet, timestamp):
+        super().__init__(frame_number, src, dest, length, wire_length, packet, timestamp)
+        self.frame_type = " LCC"
 
-        packet_bytes = packet.original.hex()
+        packet_bytes = packet.hex()
 
         try:
             dsap = ByteHandler.load_bytes(packet_bytes, 14)

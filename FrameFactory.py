@@ -3,14 +3,14 @@ from frames.FrameLCC import FrameLCC
 from frames.FrameRAW import FrameRAW
 from frames.FrameSNAP import FrameSNAP
 from handlers.FrameHandler import FrameHandler
-
+from utils.Constants import Constants
 
 class FrameFactory:
     def __new__(cls):
         raise TypeError("Static only class!")
 
     @staticmethod
-    def create_frame(frame_number, packet):
+    def create_frame(frame_number, timestamp, packet):
         frame_type = FrameFactory.extract_ether_frame_type(packet)
 
         # Handling undefined frame handlers
@@ -24,45 +24,45 @@ class FrameFactory:
         wire_length = FrameFactory.get_frame_length(packet, True)
 
         # Ethernet II Frame
-        if frame_type == "Ethernet II":
-            return FrameEthernet(frame_number, macs[0], macs[1], length, wire_length, packet)
+        if frame_type == Constants.FRAME_TYPE_ETHERNET_II:
+            return FrameEthernet(frame_number, macs[0], macs[1], length, wire_length, packet, timestamp)
         # 802.3 Frame
-        elif frame_type == "802.3":
-            return FrameFactory.create_eot_frame(frame_number, macs[0], macs[1], length, wire_length, packet)
+        elif frame_type == Constants.FRAME_TYPE_EOTT:
+            return FrameFactory.create_eot_frame(frame_number, macs[0], macs[1], length, wire_length, packet, timestamp)
 
     @staticmethod
-    def create_eot_frame(frame_number, src, dest, length, wire_length, packet):
-        packet_bytes = packet.original.hex()
+    def create_eot_frame(frame_number, src, dest, length, wire_length, packet, timestamp):
+        packet_bytes = packet.hex()
 
         # LLC SNAP
         if FrameFactory.check_snap(packet_bytes):
-            return FrameSNAP(frame_number, src, dest, length, wire_length, packet)
+            return FrameSNAP(frame_number, src, dest, length, wire_length, packet, timestamp)
         # 802 RAW
         elif FrameFactory.check_raw(packet_bytes):
-            return FrameRAW(frame_number, src, dest, length, wire_length, packet)
+            return FrameRAW(frame_number, src, dest, length, wire_length, packet, timestamp)
         # LLC
         else:
-            return FrameLCC(frame_number, src, dest, length, wire_length, packet)
+            return FrameLCC(frame_number, src, dest, length, wire_length, packet, timestamp)
 
     @staticmethod
     def extract_mac_addresses(packet):
-        packet_bytes = packet.original.hex()
+        packet_bytes = packet.hex()
         source_mac = FrameHandler.parse_src_mac(packet_bytes)
         destination_mac = FrameHandler.parse_dst_mac(packet_bytes)
         return source_mac, destination_mac
 
     @staticmethod
     def extract_ether_frame_type(packet):
-        packet_bytes = packet.original.hex()
+        packet_bytes = packet.hex()
         type_bytes = FrameHandler.parse_type(packet_bytes)
         type_bytes = int(type_bytes, 16)
 
         if type_bytes >= 1536:
             # Ethernet II packet
-            return "Ethernet II"
+            return Constants.FRAME_TYPE_ETHERNET_II
         elif type_bytes <= 1500:
             # 802.3 packet
-            return "802.3"
+            return Constants.FRAME_TYPE_EOTT
         else:
             # Values between 1501 and 1535 are considered undefined
             return None
@@ -70,9 +70,9 @@ class FrameFactory:
     @staticmethod
     def get_frame_length(packet, wire=False):
         if not wire:
-            return int(len(packet) / 2)
-        else:
             return len(packet)
+        else:
+            return len(packet) + 4
 
     @staticmethod
     def check_snap(packet_bytes):

@@ -6,7 +6,7 @@ from Pcap import Pcap
 # Strips ending "..." and new lines from a data stream
 def strip_end(stream):
     if stream.endswith('...\n'):
-        return str(stream[:-4]).rstrip("\n")
+        return str(stream[:-5])
 
 
 class YAMLHandler:

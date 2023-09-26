@@ -1,5 +1,6 @@
 from handlers.FormatHandler import FormatHandler
 
+
 class Frame:
     def __init__(self, frame_number, src_mac, dest_mac, length, wire_length, packet, timestamp):
         self.frame_number = frame_number + 1

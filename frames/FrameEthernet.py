@@ -3,6 +3,7 @@ from handlers.ByteHandler import ByteHandler
 from handlers.typehandler.TypeHandler import TypeHandler
 from utils.Constants import Constants
 
+
 class FrameEthernet(Frame):
     def __init__(self, frame_number, src, dest, length, wire_length, packet, timestamp):
         super().__init__(frame_number, src, dest, length, wire_length, packet, timestamp)

@@ -35,18 +35,3 @@ class FormatHandler:
         formatted_field += "\n\n"
 
         return ruamel.yaml.scalarstring.PreservedScalarString(formatted_field)
-
-        # TODO:: remove legacy code
-        # dump = hexdump(hex_field, dump=True)
-        # split = dump.split("\n")
-        # formatted_field = []
-        #
-        # for part in split:
-        #     formatted_field.append(re.search("([ ]{2}.*[ ]{2})", part).group().strip())
-        #
-        # formatted_field = "\n".join(formatted_field)
-        # return formatted_field
-
-
-
-

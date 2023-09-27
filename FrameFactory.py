@@ -5,6 +5,7 @@ from frames.FrameSNAP import FrameSNAP
 from handlers.FrameHandler import FrameHandler
 from utils.Constants import Constants
 
+
 class FrameFactory:
     def __new__(cls):
         raise TypeError("Static only class!")
@@ -20,7 +21,7 @@ class FrameFactory:
         # 0 index is source, 1 index is dest
         macs = FrameFactory.extract_mac_addresses(packet)
 
-        length = FrameFactory.get_frame_length(packet)  # TODO:: check length
+        length = FrameFactory.get_frame_length(packet)
         wire_length = FrameFactory.get_frame_length(packet, True)
 
         # Ethernet II Frame

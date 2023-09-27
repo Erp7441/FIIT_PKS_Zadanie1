@@ -17,20 +17,6 @@ class YAMLHandler:
     yaml = YAML()
     yaml.indent(mapping=2, sequence=4, offset=2)
 
-    # TODO:: remove legacy code
-    # Register classes
-    # yaml.register_class(Pcap)
-    # yaml.register_class(Frame)
-    # yaml.register_class(FrameEthernet)
-    # yaml.register_class(FrameEOT)
-    # yaml.register_class(FrameRAW)
-    # yaml.register_class(FrameLCC)
-    # yaml.register_class(FrameSNAP)
-    # yaml.explicit_start = False
-    # yaml.Representer = RoundTripRepresenter
-    # yaml.compact(seq_seq=False, seq_map=False)
-    # yaml.preserve_quotes = False
-
     @staticmethod
     def export_pcap(pcap_file: Pcap, path_to_yaml_file: str):
 

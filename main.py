@@ -11,12 +11,14 @@ cwd = path.dirname(path.realpath(__file__))
 
 
 def main():
+    # Arguments were passed
     args = get_args()
 
     if args.f is not None:
         start(args.f)
         return
 
+    # No arguments were passed
     path_to_pcap_file = input("Enter path to PCAP file: ")
     if not path.exists(path_to_pcap_file):
         raise FileNotFoundError("Could not find PCAP file!")
@@ -25,8 +27,8 @@ def main():
 
 def get_args():
     # Parsing arguments
-    parser = ArgumentParser(description="PCAP File analyzer")
-    parser.add_argument("-f", "-file", help="Path to a PCAP file to be scanned")
+    parser = ArgumentParser(description="PCAP File analyzer by Martin Szabo")
+    parser.add_argument("-f", "--file", help="Path to a PCAP file to be scanned")
     return parser.parse_args()
 
 

@@ -14,8 +14,8 @@ def main():
     # Arguments were passed
     args = get_args()
 
-    if args.f is not None:
-        start(args.f)
+    if args.file is not None:
+        start(args.file)
         return
 
     # No arguments were passed
@@ -28,7 +28,7 @@ def main():
 def get_args():
     # Parsing arguments
     parser = ArgumentParser(description="PCAP File analyzer by Martin Szabo")
-    parser.add_argument("-f", "--file", help="Path to a PCAP file to be scanned")
+    parser.add_argument("-f", "--file", dest="file", help="Path to a PCAP file to be scanned")
     return parser.parse_args()
 
 

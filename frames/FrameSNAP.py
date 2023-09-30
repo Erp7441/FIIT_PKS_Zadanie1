@@ -1,5 +1,5 @@
 from frames.FrameLCC import FrameLCC
-from handlers.ByteHandler import ByteHandler
+from handlers.FrameHandler import FrameHandler
 from handlers.typehandler.TypeHandler import TypeHandler
 from utils.Constants import Constants
 
@@ -15,6 +15,6 @@ class FrameSNAP(FrameLCC):
         # self.vendor = TypeHandler.find_vendor_str(ByteHandler.load_bytes_range(packet_bytes, 17, 19))
 
         try:
-            self.pid = TypeHandler.find_pid_str(ByteHandler.load_bytes_range(packet_bytes, 20, 21))
+            self.pid = TypeHandler.find_pid_str(FrameHandler.parse_pid(packet_bytes))
         except (IndentationError, KeyError):
             pass

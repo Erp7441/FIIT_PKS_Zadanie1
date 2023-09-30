@@ -31,5 +31,9 @@ class FrameHandler:
         return ByteHandler.load_bytes_range(packet_bytes, 6, 11)
 
     @staticmethod
+    def parse_pid(packet_bytes):
+        return ByteHandler.load_bytes_range(packet_bytes, 20, 21)
+
+    @staticmethod
     def parse_ipx_header(packet_bytes):
         return [ByteHandler.load_bytes(packet_bytes, 14), ByteHandler.load_bytes(packet_bytes, 15)]

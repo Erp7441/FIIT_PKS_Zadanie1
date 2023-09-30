@@ -72,6 +72,8 @@ class FrameFactory:
     def get_frame_length(packet, wire=False):
         if not wire:
             return len(packet)
+        elif len(packet) < 60 and wire:
+            return 64
         else:
             return len(packet) + 4
 

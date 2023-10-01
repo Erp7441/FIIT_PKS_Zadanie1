@@ -6,13 +6,10 @@ from argparse import ArgumentParser
 from Pcap import Pcap
 from handlers.YAMLHandler import YAMLHandler
 
+
 # Current working directory of main file
 cwd = path.dirname(path.realpath(__file__))
 
-
-# TODO:: Implement ISL check Destination Address (DA) Field
-# ISL:: The 'DA' field is a 40 bit destination address field that contains a multicast address usually set to
-# "0x01-00-0C-00-00" or "0x03-00-0C-00-00". This address is used to signal to the receiver that the packet is in ISL format.
 
 def main():
     # Arguments were passed

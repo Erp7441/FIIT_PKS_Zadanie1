@@ -24,11 +24,11 @@ class FrameHandler:
 
     @staticmethod
     def parse_src_mac(packet_bytes):
-        return ByteHandler.load_bytes_range(packet_bytes, 0, 5)
+        return ByteHandler.load_bytes_range(packet_bytes, 6, 11)
 
     @staticmethod
     def parse_dst_mac(packet_bytes):
-        return ByteHandler.load_bytes_range(packet_bytes, 6, 11)
+        return ByteHandler.load_bytes_range(packet_bytes, 0, 5)
 
     @staticmethod
     def parse_pid(packet_bytes):

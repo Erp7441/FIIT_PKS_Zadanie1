@@ -1,11 +1,10 @@
+from argparse import ArgumentParser
 from datetime import datetime
 from os import mkdir, path
 from re import sub
-from argparse import ArgumentParser
 
 from Pcap import Pcap
 from handlers.YAMLHandler import YAMLHandler
-
 
 # Current working directory of main file
 cwd = path.dirname(path.realpath(__file__))
@@ -50,6 +49,24 @@ def start(pcap_file_path: str):
     yaml_name = yaml_name+"__"+date_and_time+".yaml"
     YAMLHandler.export_pcap(pcap_file, "./export/"+yaml_name)
     print("File", "\""+yaml_name+"\"", "exported to", "\"" + cwd + "/export\"")
+
+
+# Used for debugging purposes. Analyzes and tests the validity of all PCAP files. Set the variables inside the function
+# to the appropriate values before executing.
+def run_tests():
+    from utils.Tests import Tests
+
+    pcap_folder = cwd + '/samples'
+    yaml_folder = cwd + '/export'
+    validator_path = "/home/martin/Repos/pks-course/202324/assignments/1_network_communication_analyzer/validator_yaml_output/validator.py"
+    schema_path = "./schemas/schema-all-with-unknown.yaml"
+    tests = Tests(pcap_folder, yaml_folder, validator_path, schema_path)
+
+    # Running on all files
+    tests.run_on_files()
+
+    # Testing all files
+    tests.test_yaml_files()
 
 
 if __name__ == '__main__':

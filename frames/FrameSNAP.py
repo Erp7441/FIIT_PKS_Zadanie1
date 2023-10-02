@@ -17,4 +17,4 @@ class FrameSNAP(FrameLCC):
         try:
             self.pid = TypeHandler.find_pid_str(FrameHandler.parse_pid(packet_bytes))
         except (IndentationError, KeyError):
-            pass
+            self.pid = "Unknown"

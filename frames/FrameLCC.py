@@ -14,8 +14,10 @@ class FrameLCC(FrameEOT):
         try:
             dsap = ByteHandler.load_bytes(packet_bytes, 14)
             ssap = ByteHandler.load_bytes(packet_bytes, 15)
-            self.sap = TypeHandler.find_sap_str(dsap, ssap)
+
+            if dsap != "AA" and ssap != "AA":
+                self.sap = TypeHandler.find_sap_str(dsap, ssap)
         except KeyError:
-            pass
+            self.sap = "Unknown"
 
         # control = ByteHandler.load_bytes(packet_bytes, 16) TODO:: Remove unused variable

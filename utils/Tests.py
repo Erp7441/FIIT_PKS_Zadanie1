@@ -1,8 +1,10 @@
-from os import listdir, system, mkdir, path
 from datetime import datetime
+from os import listdir, system, path
+from re import sub
+
 from Pcap import Pcap
 from handlers.YAMLHandler import YAMLHandler
-from re import sub
+
 
 # Class intended for testing various pcap files all at once
 #
@@ -10,7 +12,7 @@ from re import sub
 # pcap_folder = cwd + '/samples'
 # yaml_folder = cwd + '/export'
 # validator_path = "/home/martin/Repos/pks-course/202324/assignments/1_network_communication_analyzer/validator_yaml_output/validator.py"
-# schema_path = "/home/martin/Repos/pks-course/202324/assignments/1_network_communication_analyzer/validator_yaml_output/schemas/schema-all.yaml"
+# schema_path = "./schemas/schema-all-with-unknown.yaml"
 # tests = Tests(pcap_folder, yaml_folder, validator_path, schema_path)
 #
 # Running on all files

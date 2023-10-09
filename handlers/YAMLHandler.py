@@ -3,10 +3,11 @@ from ruamel.yaml import YAML
 from Pcap import Pcap
 
 
+# TODO:: Remove?
 # Strips ending "..." and new lines from a data stream
 def strip_end(stream):
-    if stream.endswith('...\n'):
-        return str(stream[:-5])
+    if stream.endswith('\n'):
+        return str(stream[:-1])
 
 
 class YAMLHandler:
@@ -46,6 +47,9 @@ class YAMLHandler:
             data = file.read()
             data = data.replace("hexa_frame: |-", "hexa_frame: |")
             data = data.replace("hexa_frame: |+", "hexa_frame: |")
+            data = data.replace("  - node:", "\n  - node:")
+            data = data.replace("ipv4_senders:\n\n", "ipv4_senders:\n")
+            data = data.replace("max_send_packets_by:", "\nmax_send_packets_by:")
             file.close()
 
         with open(path_to_yaml_file, "w") as file:

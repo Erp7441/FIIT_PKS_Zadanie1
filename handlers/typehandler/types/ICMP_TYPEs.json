@@ -1,0 +1,15 @@
+{
+  "str_to_hex": {
+    "ECHO REPLY": "0x00",
+    "ECHO REQUEST": "0x08",
+    "Destination Unreachable": "0x03",
+    "TIME EXCEEDED": "0x11"
+  },
+
+  "hex_to_str": {
+    "0x00": "ECHO REPLY",
+    "0x08": "ECHO REQUEST",
+    "0x03": "Destination Unreachable",
+    "0x11": "TIME EXCEEDED"
+  }
+}

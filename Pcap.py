@@ -16,3 +16,16 @@ class Pcap:
             # Entry [0] is timestamp
             # Entry [1] are bytes
             self.packets.append(FrameFactory.create_frame(index, entry[0], entry[1]))
+
+        # self.ipv4_senders = " "
+        # self.max_send_packets_by = " "
+
+    def find_ipv4_senders(self):
+        pass
+
+    def find_max_send_packets(self):
+        best_sender = self.ipv4_senders[0]
+        for sender in self.ipv4_senders:
+            if sender["count"] > best_sender["count"]:
+                best_sender = sender
+        return best_sender

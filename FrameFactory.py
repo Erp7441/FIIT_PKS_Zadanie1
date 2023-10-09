@@ -59,7 +59,7 @@ class FrameFactory:
     @staticmethod
     def extract_ether_frame_type(packet):
         packet_bytes = packet.hex()
-        type_bytes = FrameHandler.parse_type(packet_bytes)
+        type_bytes = FrameHandler.parse_type(packet_bytes, True)
         type_bytes = int(type_bytes, 16)
 
         if type_bytes >= 1536:

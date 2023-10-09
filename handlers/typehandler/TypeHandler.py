@@ -16,6 +16,7 @@ class TypeHandler:
     tcp_dict = json.load(open(cwd + "/types/TCPs.json"))
     udp_dict = json.load(open(cwd + "/types/UDPs.json"))
     opcode_dict = json.load(open(cwd + "/types/Opcodes.json"))
+    icmp_type_dict = json.load(open(cwd + "/types/ICMP_TYPEs.json"))
 
     @staticmethod
     def find_ether_type_str(hex_string: str):
@@ -78,8 +79,16 @@ class TypeHandler:
 
     @staticmethod
     def find_opcode_str(hex_string: str):
-        return TypeHandler.opcode_dict["hex_to_str"].get(hex_string.upper(), "Unknown")
+        return TypeHandler.opcode_dict["hex_to_str"].get("0x" + hex_string.upper(), "Unknown")
 
     @staticmethod
     def find_opcode_hex(string: str):
         return TypeHandler.opcode_dict["str_to_hex"].get(string, "Unknown")
+
+    @staticmethod
+    def find_icmp_type_str(hex_string: str):
+        return TypeHandler.icmp_type_dict["hex_to_str"].get("0x" + hex_string.upper(), "Unknown")
+
+    @staticmethod
+    def find_icmp_type_hex(string: str):
+        return TypeHandler.icmp_type_dict["str_to_hex"].get(string, "Unknown")

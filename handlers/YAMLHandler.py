@@ -70,6 +70,8 @@ class YAMLHandler:
             "dst_port",
             "app_protocol",
             "icmp_type",
+            "icmp_id",
+            "icmp_seq",
             "sap",
             "pid",
             "hexa_frame"

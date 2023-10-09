@@ -12,7 +12,12 @@ class FrameEthernet(Frame):
 
         self.ether_type = FrameHandler.parse_type(packet_bytes)
 
-        if self.ether_type != "IPv6" and self.ether_type != "LLDP" and self.ether_type != "ETCP":
+        if (
+            self.ether_type != "IPv6" and
+            self.ether_type != "LLDP" and
+            self.ether_type != "ECTP" and
+            self.ether_type != "Unknown"
+        ):
             self.src_ip = FrameHandler.parse_src_ip(packet_bytes)
             self.dst_ip = FrameHandler.parse_dst_ip(packet_bytes)
 

@@ -5,6 +5,7 @@ from re import sub
 
 from Pcap import Pcap
 from handlers.YAMLHandler import YAMLHandler
+from utils.Args import Args
 
 # Current working directory of main file
 cwd = path.dirname(path.realpath(__file__))
@@ -12,10 +13,13 @@ cwd = path.dirname(path.realpath(__file__))
 
 def main():
     # Arguments were passed
-    args = get_args()
+    args = Args()
 
     if args.file is not None:
         start(args.file)
+        return
+    elif args.test_files is not None and args.validator_path is not None and args.schema_path is not None:
+        run_tests(args.test_files, args.validator_path, args.schema_path)
         return
 
     # No arguments were passed
@@ -23,13 +27,6 @@ def main():
     if not path.exists(path_to_pcap_file):
         raise FileNotFoundError("Could not find PCAP file!")
     start(path_to_pcap_file)
-
-
-def get_args():
-    # Parsing arguments
-    parser = ArgumentParser(description="PCAP File analyzer by Martin Szabo")
-    parser.add_argument("-f", "--file", dest="file", help="Path to a PCAP file to be scanned")
-    return parser.parse_args()
 
 
 # Start procedure
@@ -53,13 +50,10 @@ def start(pcap_file_path: str):
 
 # Used for debugging purposes. Analyzes and tests the validity of all PCAP files. Set the variables inside the function
 # to the appropriate values before executing.
-def run_tests():
+def run_tests(pcap_folder, validator_path, schema_path):
     from utils.Tests import Tests
 
-    pcap_folder = cwd + '/samples'
     yaml_folder = cwd + '/export'
-    validator_path = "/home/martin/Repos/pks-course/202324/assignments/1_network_communication_analyzer/validator_yaml_output/validator.py"
-    schema_path = "./schemas/schema-all-with-unknown.yaml"
     tests = Tests(pcap_folder, yaml_folder, validator_path, schema_path)
 
     # Running on all files

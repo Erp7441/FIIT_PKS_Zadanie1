@@ -35,3 +35,20 @@ class FormatHandler:
         formatted_field += "\n\n"
 
         return ruamel.yaml.scalarstring.PreservedScalarString(formatted_field)
+
+    @staticmethod
+    def format_ipv4(hex_string):
+        if hex_string is None or len(hex_string) != 8:
+            return None
+
+        substring = re.findall("(..)", hex_string)
+
+        for i, string in enumerate(substring):
+            substring[i] = str(int(string, 16))
+        hex_string = '.'.join(substring)
+
+        return hex_string
+
+    @staticmethod
+    def format_ipv6(hex_string):
+        pass

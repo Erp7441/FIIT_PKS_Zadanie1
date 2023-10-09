@@ -1,0 +1,11 @@
+{
+  "hex_to_str": {
+    "0001": "REQUEST",
+    "0002": "REPLY"
+  },
+
+  "str_to_hex": {
+    "REQUEST": "0001",
+    "REPLY": "0002"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "dec_to_string": {
+  "dec_to_str": {
     "20": "FTP-DATA",
     "21": "FTP-CONTROL",
     "22": "SSH",
@@ -7,6 +7,7 @@
     "25": "SMTP",
     "53": "DNS",
     "80": "HTTP",
+    "8080": "HTTP",
     "110": "POP3",
     "119": "NNTP",
     "137": "NETBIOS-NS",
@@ -20,7 +21,7 @@
     "17500": "DB-LSP-DISC"
   },
 
-  "str_to_hex": {
+  "str_to_dec": {
     "FTP-DATA": "20",
     "FTP-CONTROL": "21",
     "SSH": "22",
@@ -28,6 +29,7 @@
     "SMTP  ": "25",
     "DNS": "53",
     "HTTP": "80",
+    "HTTP": "8080",
     "POP3": "110",
     "NNTP": "119",
     "NETBIOS-NS": "137",

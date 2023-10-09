@@ -1,5 +1,5 @@
 {
-  "hex_to_string": {
+  "hex_to_str": {
     "0x01": "ICMP",
     "0x02": "IGMP",
     "0x06": "TCP",

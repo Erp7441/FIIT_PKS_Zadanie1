@@ -53,6 +53,10 @@ def start(pcap_file_path: str):
 def run_tests(pcap_folder, validator_path, schema_path):
     from utils.Tests import Tests
 
+    # Creates export dir
+    if not path.exists(cwd + "/export"):
+        mkdir(cwd + "/export")
+
     yaml_folder = cwd + '/export'
     tests = Tests(pcap_folder, yaml_folder, validator_path, schema_path)
 

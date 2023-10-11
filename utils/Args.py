@@ -12,6 +12,7 @@ class Args:
         self.parser.add_argument("--test", dest="test_files", help="Path to PCAP files folder to be tested")
         self.parser.add_argument("--validator-path", dest="validator_path", help="Path to validator executable")
         self.parser.add_argument("--schema-path", dest="schema_path", help="Path to schemas")
+        self.parser.add_argument("-p", "--protocol", dest="protocol", help="Protocol to lookup")
 
         args_dict = self.parser.parse_args().__dict__
 

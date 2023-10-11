@@ -2,8 +2,8 @@
   "dec_to_str": {
     "37": "TIME",
     "53": "DNS",
-    "67": "DHCP",
-    "68": "DHCP",
+    "67": "DHCP-SERVER",
+    "68": "DHCP-CLIENT",
     "69": "TFTP",
     "80": "HTTP",
     "137": "NETBIOS-NS",
@@ -22,8 +22,8 @@
   "str_to_dec": {
     "TIME": "37",
     "DNS": "53",
-    "DHCP": "67",
-    "DHCP": "68",
+    "DHCP-SERVER": "67",
+    "DHCP-CLIENT": "68",
     "TFTP": "69",
     "HTTP": "80",
     "NETBIOS-NS": "137",

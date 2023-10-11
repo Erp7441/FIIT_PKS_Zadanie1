@@ -2,6 +2,7 @@ from handlers.ByteHandler import ByteHandler
 from handlers.typehandler.TypeHandler import TypeHandler
 from handlers.FormatHandler import FormatHandler
 
+import re
 
 class FrameHandler:
 
@@ -117,3 +118,17 @@ class FrameHandler:
     @staticmethod
     def parse_ethernet_ii_header_length():
         return 28
+
+    @staticmethod
+    def parse_tcp_flags(header_bytes):
+        flags = ByteHandler.load_bytes_range(header_bytes, 12, 13)
+        flags = re.findall("(..)", flags)[1]
+        return TypeHandler.find_tcp_flags_str(flags)
+
+    @staticmethod
+    def parse_tcp_sequence_number(header_bytes):
+        return ByteHandler.load_bytes_range(header_bytes, 4, 7)
+
+    @staticmethod
+    def parse_tcp_acknowledgment_number(header_bytes):
+        return ByteHandler.load_bytes_range(header_bytes, 8, 11)

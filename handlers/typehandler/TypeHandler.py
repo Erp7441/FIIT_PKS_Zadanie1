@@ -14,6 +14,7 @@ class TypeHandler:
     pids_dict = json.load(open(cwd + "/types/PIDs.json"))
     ipv4_dict = json.load(open(cwd + "/types/IPV4s.json"))
     tcp_dict = json.load(open(cwd + "/types/TCPs.json"))
+    tcp_flags_dict = json.load(open(cwd + "/types/TCP_FLAGS.json"))
     udp_dict = json.load(open(cwd + "/types/UDPs.json"))
     opcode_dict = json.load(open(cwd + "/types/Opcodes.json"))
     icmp_type_dict = json.load(open(cwd + "/types/ICMP_TYPEs.json"))
@@ -60,6 +61,14 @@ class TypeHandler:
     @staticmethod
     def find_ipv4_hex(string: str):
         return TypeHandler.ipv4_dict["str_to_hex"].get(string, "Unknown")
+
+    @staticmethod
+    def find_tcp_flags_str(hex_string: str):
+        return TypeHandler.tcp_flags_dict["hex_to_str"].get("0x" + hex_string.upper(), "Unknown")
+
+    @staticmethod
+    def find_tcp_flags_hex(string: str):
+        return TypeHandler.tcp_flags_dict["str_to_hex"].get(string, "Unknown")
 
     @staticmethod
     def find_tcp_dec(string: str):

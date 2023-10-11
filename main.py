@@ -15,7 +15,10 @@ def main():
     # Arguments were passed
     args = Args()
 
-    if args.file is not None:
+    if args.file is not None and args.protocol is not None:
+        start(args.file, args.protocol)
+        return
+    elif args.file is not None:
         start(args.file)
         return
     elif args.test_files is not None and args.validator_path is not None and args.schema_path is not None:
@@ -30,7 +33,7 @@ def main():
 
 
 # Start procedure
-def start(pcap_file_path: str):
+def start(pcap_file_path: str, protocol=None):
     # Runs pcap analyzer on a PCAP file
 
     # Creates export dir
@@ -38,6 +41,9 @@ def start(pcap_file_path: str):
         mkdir(cwd + "/export")
 
     pcap_file = Pcap(pcap_file_path)
+
+    if protocol is not None:
+        pcap_file.filter_out(protocol)
 
     # Generates YAMl file from PCAP data
     date_and_time = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
@@ -52,10 +58,6 @@ def start(pcap_file_path: str):
 # to the appropriate values before executing.
 def run_tests(pcap_folder, validator_path, schema_path):
     from utils.Tests import Tests
-
-    # Creates export dir
-    if not path.exists(cwd + "/export"):
-        mkdir(cwd + "/export")
 
     yaml_folder = cwd + '/export'
     tests = Tests(pcap_folder, yaml_folder, validator_path, schema_path)

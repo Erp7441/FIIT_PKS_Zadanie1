@@ -48,9 +48,6 @@ class FrameEthernet(Frame):
                     self.seq_num = FrameHandler.parse_tcp_sequence_number(header_bytes)
                     self.ack_num = FrameHandler.parse_tcp_acknowledgment_number(header_bytes)
 
-                elif self.protocol == "UDP":
-                    pass  # TODO:: Handle UDP
-
             # ICMP stuff
             if self.protocol == "ICMP":
                 self.icmp_type = FrameHandler.parse_icmp_type(header_bytes)

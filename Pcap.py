@@ -226,9 +226,7 @@ class Pcap:
         ports = [init_packet.src_port]
         ip = [init_packet.dst_ip, init_packet.src_ip]
 
-        # TODO:: Add ACK from other side
-        # TODO:: Remove?
-        size = 60  # Constatnt?
+        size = 60  # Constant?
         last = False
 
         udp_conversation = [init_packet]
@@ -243,15 +241,18 @@ class Pcap:
                 (udp_packet.src_port in ports and udp_packet.dst_port in ports)
             ):
                 udp_conversation.append(udp_packet)
+
+                if udp_packet.app_protocol == "Unknown":
+                    udp_packet.app_protocol = init_packet.app_protocol
+
                 if udp_packet.len_frame_pcap < size:
                     last = True
                 elif last:
+                    if init_packet.app_protocol == "TFTP":
+                        opcode = int(FrameHandler.parse_tftp_opcode(udp_packet.hexa_frame), 16)
+                        if opcode != 4:
+                            last = False
                     break  # Last packet of communication
-
-        for udp_packet in udp_conversation:
-            if udp_packet == init_packet:
-                continue
-            udp_packets.remove(udp_packet)
 
         return {
             "Conversation": udp_conversation,

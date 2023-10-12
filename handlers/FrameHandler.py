@@ -132,3 +132,8 @@ class FrameHandler:
     @staticmethod
     def parse_tcp_acknowledgment_number(header_bytes):
         return ByteHandler.load_bytes_range(header_bytes, 8, 11)
+
+    @staticmethod
+    def parse_tftp_opcode(hexa_frame):
+        bytes_str = str(hexa_frame).replace(' ', '').replace('\n', '')
+        return ByteHandler.load_bytes_range(bytes_str, 42, 43)

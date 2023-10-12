@@ -7,7 +7,7 @@ from Pcap import Pcap
 # Strips ending "..." and new lines from a data stream
 def strip_end(stream):
     if stream.endswith('\n'):
-        return str(stream[:-1])
+        return str(stream[:-5])
 
 
 class YAMLHandler:
@@ -25,13 +25,31 @@ class YAMLHandler:
         packets = pcap_file.packets
         packets_dict_list = []
 
+        # Pcap file packets
         for packet in packets:
             packets_dict_list.append(packet.__dict__)
 
+        # Comm and partial comm section packets
+        for entry in pcap_file.communication:
+            comm_packet_dict = []
+            for packet in entry["packets"]:
+                comm_packet_dict.append(packet.__dict__)
+            entry["packets"] = YAMLHandler.sort_dictionary(comm_packet_dict)
+
+        partial_comm_packet_dict = []
+        for packet in pcap_file.partial_communication["packets"]:
+            partial_comm_packet_dict.append(packet.__dict__)
+        pcap_file.partial_communication["packets"] = YAMLHandler.sort_dictionary(partial_comm_packet_dict)
+
+        # Copying values so reference gets lost
         pcap_file_dict = pcap_file.__dict__.copy()
+
+        # Sorting the dict keys to match YAML schema
         packets_dict_list = YAMLHandler.sort_dictionary(packets_dict_list)
+
         pcap_file_dict["packets"] = packets_dict_list
 
+        # Opening file
         with open(path_to_yaml_file, "w") as file:
             # Dumping YAML
             YAMLHandler.yaml.dump(pcap_file_dict, file, transform=strip_end)
@@ -50,6 +68,7 @@ class YAMLHandler:
             data = data.replace("  - node:", "\n  - node:")
             data = data.replace("ipv4_senders:\n\n", "ipv4_senders:\n")
             data = data.replace("max_send_packets_by:", "\nmax_send_packets_by:")
+            data = data.replace("\ncommunication:", "\n\ncommunication:")
             file.close()
 
         with open(path_to_yaml_file, "w") as file:

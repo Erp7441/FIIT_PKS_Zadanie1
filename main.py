@@ -11,6 +11,8 @@ from utils.Args import Args
 cwd = path.dirname(path.realpath(__file__))
 
 
+# TODO:: Handle typical UDP (TFTP) app protocol port negotiation
+
 def main():
     # Arguments were passed
     args = Args()

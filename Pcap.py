@@ -99,13 +99,12 @@ class Pcap:
             except AttributeError:
                 pass
 
-        self.packets = new_packet_list
-
         if protocol_type == "TCP" or protocol_type == "BOTH":
-            comm_dict = self.find_tcp_conversations()
+            comm_dict = self.find_tcp_conversations(new_packet_list)
             self.communication, self.partial_communication = comm_dict["Complete"], comm_dict["Incomplete"]
         elif protocol_type == "UDP" or protocol_type == "BOTH":
             comm_dict = self.find_udp_conversations()
+            self.communication, self.partial_communication = comm_dict["Complete"], comm_dict["Incomplete"]
         elif protocol_type == "ICMP":
             pass
         elif protocol_type == "ARP":
@@ -116,16 +115,18 @@ class Pcap:
 
         return True
 
+    ####################################################
     # TCP shenanigans
-    def find_tcp_conversations(self):
+    ####################################################
+    def find_tcp_conversations(self, packets):
         tcp_packets = []
-        for packet in self.packets:
-            if packet.protocol == "TCP":
+        for packet in packets:
+            if packet.ether_type == "IPv4" and packet.protocol == "TCP":
                 tcp_packets.append(packet)
 
         tcp_conversations = []
         for num, packet in enumerate(tcp_packets):
-            tcp_conversations.append (Pcap.find_tcp_conversation(tcp_packets, packet, num))
+            tcp_conversations.append(Pcap.find_tcp_conversation(tcp_packets, packet, num))
 
         return Pcap.sort_tcp_conversations(tcp_conversations)
 
@@ -194,14 +195,93 @@ class Pcap:
 
         return completeness == 31 or completeness == 47 or completeness == 63
 
+    ####################################################
+    # UDP shenanigans
+    ####################################################
     def find_udp_conversations(self):
         udp_packets = []
         for packet in self.packets:
-            if packet.protocol == "UDP":
+            if packet.ether_type == "IPv4" and packet.protocol == "UDP":
                 udp_packets.append(packet)
 
         udp_conversations = []
-        for num, packet in enumerate(udp_packets):
-            udp_conversations.append (Pcap.find_udp_conversation(udp_packets, packet, num))
+        for packet in udp_packets:
+            conv = Pcap.find_udp_conversation(udp_packets, packet)
+            if conv is not None:
+                udp_conversations.append(conv)
 
-        return Pcap.sort_udp_conversations(udp_conversations)
+        formatted_output = Pcap.sort_udp_conversations(udp_conversations)
+
+        return formatted_output
+
+    @staticmethod
+    def find_udp_conversation(udp_packets, init_packet):
+        if init_packet.dst_port != 69:
+            return {
+                "Conversation": [init_packet],
+                "Complete": False
+            }
+
+        # Packet mensi ako dohodnuta velkost == koniec
+        ports = [init_packet.src_port]
+        ip = [init_packet.dst_ip, init_packet.src_ip]
+
+        # TODO:: Add ACK from other side
+        # TODO:: Remove?
+        size = 60  # Constatnt?
+        last = False
+
+        udp_conversation = [init_packet]
+
+        for i, udp_packet in enumerate(udp_packets):
+            if udp_packet is init_packet:
+                ports.append(udp_packets[i + 1].src_port)
+                continue
+
+            if (
+                (udp_packet.src_ip in ip and udp_packet.dst_ip in ip) and
+                (udp_packet.src_port in ports and udp_packet.dst_port in ports)
+            ):
+                udp_conversation.append(udp_packet)
+                if udp_packet.len_frame_pcap < size:
+                    last = True
+                elif last:
+                    break  # Last packet of communication
+
+        for udp_packet in udp_conversation:
+            if udp_packet == init_packet:
+                continue
+            udp_packets.remove(udp_packet)
+
+        return {
+            "Conversation": udp_conversation,
+            "Complete": last
+        }
+
+    @staticmethod
+    def sort_udp_conversations(udp_conversations):
+        formatted_output = {
+            "Complete": [],
+            "Incomplete": []
+        }
+
+        for num, udp_conversation in enumerate(udp_conversations):
+            if udp_conversation['Complete']:
+                target = "Complete"
+            else:
+                target = "Incomplete"
+
+            formatted_dict = {
+                "number_comm": num + 1,
+                "src_comm": udp_conversation['Conversation'][0].src_ip,
+                "dst_comm": udp_conversation['Conversation'][0].dst_ip,
+                "packets": []
+            }
+
+            for packet in udp_conversation['Conversation']:
+                formatted_dict["packets"].append(packet)
+
+            formatted_output[target].append(formatted_dict)
+
+        formatted_output['Incomplete'] = formatted_output['Incomplete'][0]
+        return formatted_output

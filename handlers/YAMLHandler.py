@@ -6,8 +6,10 @@ from Pcap import Pcap
 # TODO:: Remove?
 # Strips ending "..." and new lines from a data stream
 def strip_end(stream):
-    if stream.endswith('\n'):
+    if stream.endswith("\n...\n"):
         return str(stream[:-5])
+
+    return str(stream)
 
 
 class YAMLHandler:
@@ -29,17 +31,20 @@ class YAMLHandler:
         for packet in packets:
             packets_dict_list.append(packet.__dict__)
 
-        # Comm and partial comm section packets
-        for entry in pcap_file.communication:
-            comm_packet_dict = []
-            for packet in entry["packets"]:
-                comm_packet_dict.append(packet.__dict__)
-            entry["packets"] = YAMLHandler.sort_dictionary(comm_packet_dict)
+        try:
+            # Comm and partial comm section packets
+            for entry in pcap_file.communication:
+                comm_packet_dict = []
+                for packet in entry["packets"]:
+                    comm_packet_dict.append(packet.__dict__)
+                entry["packets"] = YAMLHandler.sort_dictionary(comm_packet_dict)
 
-        partial_comm_packet_dict = []
-        for packet in pcap_file.partial_communication["packets"]:
-            partial_comm_packet_dict.append(packet.__dict__)
-        pcap_file.partial_communication["packets"] = YAMLHandler.sort_dictionary(partial_comm_packet_dict)
+            partial_comm_packet_dict = []
+            for packet in pcap_file.partial_communication["packets"]:
+                partial_comm_packet_dict.append(packet.__dict__)
+            pcap_file.partial_communication["packets"] = YAMLHandler.sort_dictionary(partial_comm_packet_dict)
+        except AttributeError:
+            pass
 
         # Copying values so reference gets lost
         pcap_file_dict = pcap_file.__dict__.copy()

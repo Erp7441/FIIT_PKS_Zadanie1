@@ -101,14 +101,22 @@ class Pcap:
 
         self.packets = new_packet_list
 
-        comm_dict = self.find_tcp_conversations()
-        self.communication, self.partial_communication = comm_dict["Complete"], comm_dict["Incomplete"]
+        if protocol_type == "TCP" or protocol_type == "BOTH":
+            comm_dict = self.find_tcp_conversations()
+            self.communication, self.partial_communication = comm_dict["Complete"], comm_dict["Incomplete"]
+        elif protocol_type == "UDP" or protocol_type == "BOTH":
+            comm_dict = self.find_udp_conversations()
+        elif protocol_type == "ICMP":
+            pass
+        elif protocol_type == "ARP":
+            pass
         # TODO:: Add UDP
         # TODO:: Add ICMP
         # TODO:: Add ARP
 
         return True
 
+    # TCP shenanigans
     def find_tcp_conversations(self):
         tcp_packets = []
         for packet in self.packets:
@@ -185,3 +193,15 @@ class Pcap:
                     completeness += 32
 
         return completeness == 31 or completeness == 47 or completeness == 63
+
+    def find_udp_conversations(self):
+        udp_packets = []
+        for packet in self.packets:
+            if packet.protocol == "UDP":
+                udp_packets.append(packet)
+
+        udp_conversations = []
+        for num, packet in enumerate(udp_packets):
+            udp_conversations.append (Pcap.find_udp_conversation(udp_packets, packet, num))
+
+        return Pcap.sort_udp_conversations(udp_conversations)

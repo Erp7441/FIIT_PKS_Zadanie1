@@ -43,7 +43,10 @@ def start(pcap_file_path: str, protocol=None):
     pcap_file = Pcap(pcap_file_path)
 
     if protocol is not None:
-        pcap_file.filter_out(protocol)
+        result = pcap_file.filter_out(protocol)
+        if not result:
+            print("Error invalid protocol")
+            return
 
     # Generates YAMl file from PCAP data
     date_and_time = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")

@@ -32,17 +32,7 @@ class YAMLHandler:
             packets_dict_list.append(packet.__dict__)
 
         try:
-            # Comm and partial comm section packets
-            for entry in pcap_file.communication:
-                comm_packet_dict = []
-                for packet in entry["packets"]:
-                    comm_packet_dict.append(packet.__dict__)
-                entry["packets"] = YAMLHandler.sort_dictionary(comm_packet_dict)
-
-            partial_comm_packet_dict = []
-            for packet in pcap_file.partial_communication["packets"]:
-                partial_comm_packet_dict.append(packet.__dict__)
-            pcap_file.partial_communication["packets"] = YAMLHandler.sort_dictionary(partial_comm_packet_dict)
+            YAMLHandler.sort_communications(pcap_file)
         except AttributeError:
             pass
 
@@ -117,3 +107,24 @@ class YAMLHandler:
             new_packet_dict_list.append(new_packet)
 
         return new_packet_dict_list
+
+    @staticmethod
+    def sort_communications(pcap_file):
+        # Comm and partial comm section packets
+        for entry in pcap_file.communication:
+            comm_packet_dict = []
+            for packet in entry["packets"]:
+                comm_packet_dict.append(packet.__dict__)
+            entry["packets"] = YAMLHandler.sort_dictionary(comm_packet_dict)
+
+        partial_comm_packet_dict = []
+
+        if type(pcap_file.partial_communication) is list:
+            for packet in pcap_file.partial_communication:
+                partial_comm_packet_dict.append(packet.__dict__)
+            pcap_file.partial_communication = YAMLHandler.sort_dictionary(partial_comm_packet_dict)
+
+        elif type(pcap_file.partial_communication) is dict:
+            for packet in pcap_file.partial_communication["packets"]:
+                partial_comm_packet_dict.append(packet.__dict__)
+            pcap_file.partial_communication["packets"] = YAMLHandler.sort_dictionary(partial_comm_packet_dict)

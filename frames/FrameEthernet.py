@@ -25,6 +25,11 @@ class FrameEthernet(Frame):
 
         if self.ether_type == "ARP":
             self.arp_opcode = FrameHandler.parse_arp_opcode(packet_bytes)
+            if self.arp_opcode == "REQUEST":
+                self.lookup = FrameHandler.parse_arp_target_ip(self.hexa_frame)
+            elif self.arp_opcode == "REPLY":
+                self.ip_mac_pair = FrameHandler.parse_arp_ip_mac_src_pair(self.hexa_frame)
+
         elif self.ether_type == "IPv4":
             self.protocol = FrameHandler.parse_protocol(packet_bytes)
 
@@ -51,7 +56,5 @@ class FrameEthernet(Frame):
             # ICMP stuff
             if self.protocol == "ICMP":
                 self.icmp_type = FrameHandler.parse_icmp_type(header_bytes)
-
-                # TODO:: Mam to mat?
                 # self.icmp_id = FrameHandler.parse_icmp_id(header_bytes)
                 # self.icmp_seq = FrameHandler.parse_icmp_seq(header_bytes)

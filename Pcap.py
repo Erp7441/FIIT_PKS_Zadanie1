@@ -4,6 +4,7 @@ from FrameFactory import FrameFactory
 from frames.FrameEthernet import FrameEthernet
 from handlers.FrameHandler import FrameHandler
 from handlers.typehandler.TypeHandler import TypeHandler
+from utils.Constants import Constants
 
 
 class Pcap:
@@ -72,6 +73,9 @@ class Pcap:
 
     @staticmethod
     def get_protocol_type(protocol: str):
+        if protocol == "ARP" or protocol == "ICMP":
+            return protocol
+
         tcp = TypeHandler.find_tcp_dec(protocol)
         udp = TypeHandler.find_udp_dec(protocol)
 
@@ -107,11 +111,11 @@ class Pcap:
             self.communication, self.partial_communication = comm_dict["Complete"], comm_dict["Incomplete"]
         elif protocol_type == "ICMP":
             pass
+            # TODO:: Add ICMP
         elif protocol_type == "ARP":
-            pass
-        # TODO:: Add UDP
-        # TODO:: Add ICMP
-        # TODO:: Add ARP
+            comm_dict = self.find_arp_conversations()
+            self.communication, self.partial_communication = comm_dict["Complete"], comm_dict["Incomplete"]
+            # TODO:: Add ARP
 
         return True
 
@@ -286,3 +290,55 @@ class Pcap:
 
         formatted_output['Incomplete'] = formatted_output['Incomplete'][0]
         return formatted_output
+
+    ####################################################
+    # ARP shenanigans
+    ####################################################
+    def find_arp_conversations(self):
+        replies = []
+        requests = []
+        for packet in self.packets:
+            if packet.frame_type == Constants.FRAME_TYPE_ETHERNET_II and packet.ether_type == "ARP":
+                if packet.arp_opcode == 'REQUEST':
+                    requests.append(packet)
+                elif packet.arp_opcode == 'REPLY':
+                    replies.append(packet)
+
+
+
+        arp_conversations = Pcap.sort_arp_conversations(replies, requests)
+        return arp_conversations
+
+    @staticmethod
+    def sort_arp_conversations(replies, requests):
+        complete = []
+        complete_ungrouped = []
+
+        # Get all request, reply pairs
+        for reply in replies:
+            for request in requests:
+                if reply.dst_mac == request.src_mac and reply.frame_number > request.frame_number:
+                    complete.append({
+                        "ip_lookup": request.lookup,
+                        "ip_mac_pair": ' - '.join(reply.ip_mac_pair),
+                        "packets": [request, reply]
+                    })
+                    complete_ungrouped.append(request)
+                    complete_ungrouped.append(reply)
+
+        # Remove frames that are in pairs from the initial arrays
+        for frame in complete_ungrouped:
+            if frame.arp_opcode == 'REQUEST':
+                requests.remove(frame)
+            elif frame.arp_opcode == 'REPLY':
+                replies.remove(frame)
+
+        # Join the two arrays together and sort them out by frame number to get 'incomplete' count
+        incomplete = requests + replies
+        incomplete.sort(key=lambda f: f.frame_number)
+
+        return {
+            "Complete": complete,
+            "Incomplete": incomplete
+        }
+

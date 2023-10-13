@@ -137,3 +137,31 @@ class FrameHandler:
     def parse_tftp_opcode(hexa_frame):
         bytes_str = str(hexa_frame).replace(' ', '').replace('\n', '')
         return ByteHandler.load_bytes_range(bytes_str, 42, 43)
+
+    @staticmethod
+    def parse_arp_target_ip(hexa_frame):
+        bytes_str = str(hexa_frame).replace(' ', '').replace('\n', '')
+        return FormatHandler.format_ipv4(ByteHandler.load_bytes_range(bytes_str, 38, 41))
+
+    @staticmethod
+    def parse_arp_target_mac(hexa_frame):
+        bytes_str = str(hexa_frame).replace(' ', '').replace('\n', '')
+        return FormatHandler.format_mac(ByteHandler.load_bytes_range(bytes_str, 32, 37))
+
+    @staticmethod
+    def parse_arp_source_ip(hexa_frame):
+        bytes_str = str(hexa_frame).replace(' ', '').replace('\n', '')
+        return FormatHandler.format_ipv4(ByteHandler.load_bytes_range(bytes_str, 28, 31))
+
+    @staticmethod
+    def parse_arp_source_mac(hexa_frame):
+        bytes_str = str(hexa_frame).replace(' ', '').replace('\n', '')
+        return FormatHandler.format_mac(ByteHandler.load_bytes_range(bytes_str, 22, 27))
+
+    @staticmethod
+    def parse_arp_ip_mac_src_pair(hexa_frame):
+        return FrameHandler.parse_arp_source_ip(hexa_frame), FrameHandler.parse_arp_source_mac(hexa_frame)
+
+    @staticmethod
+    def parse_arp_ip_mac_dst_pair(hexa_frame):
+        return FrameHandler.parse_arp_target_ip(hexa_frame), FrameHandler.parse_arp_target_mac(hexa_frame)

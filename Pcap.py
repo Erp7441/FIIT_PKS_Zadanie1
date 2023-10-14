@@ -393,8 +393,18 @@ class Pcap:
 
         for icmp_packet in icmp_packets:
             if (
-                (icmp_packet.src_ip in ip and icmp_packet.dst_ip in ip) and
-                (packet.get_icmp_id() == icmp_packet.get_icmp_id())
+                (
+                    (icmp_packet.src_ip in ip and icmp_packet.dst_ip in ip)
+                    and (packet.get_icmp_id() == icmp_packet.get_icmp_id())
+                )
+                or
+                (
+                    (icmp_packet.icmp_type == "TIME EXCEEDED") and
+                    (
+                        icmp_packet.get_icmp_expired_inner_src_ip() in ip
+                        and icmp_packet.get_icmp_expired_inner_dst_ip() in ip
+                    )
+                )
             ):
                 icmp_conversation.append(icmp_packet)
 

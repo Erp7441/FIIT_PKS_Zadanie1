@@ -59,8 +59,6 @@ class FrameEthernet(Frame):
 
     def add_icmp_complete_fields(self):
         if self.protocol == "ICMP":
-            # TODO:: Add time exceeded?
-
             if self.icmp_type == "ECHO REPLY" or self.icmp_type == "ECHO REQUEST":
                 packet_bytes = str(self.hexa_frame).replace(' ', '').replace('\n', '')
                 header_bytes = packet_bytes[
@@ -73,8 +71,6 @@ class FrameEthernet(Frame):
 
     def get_icmp_id(self):
         if self.protocol == "ICMP":
-            # TODO:: Add time exceeded?
-
             if self.icmp_type == "ECHO REPLY" or self.icmp_type == "ECHO REQUEST":
                 packet_bytes = str(self.hexa_frame).replace(' ', '').replace('\n', '')
                 header_bytes = packet_bytes[
@@ -88,3 +84,11 @@ class FrameEthernet(Frame):
         if self.protocol == "ICMP":
             return self.protocol == protocol
         return self.app_protocol == protocol
+
+    def get_icmp_expired_inner_src_ip(self):
+        if self.protocol == "ICMP" and self.icmp_type == "TIME EXCEEDED":
+            return FrameHandler.parse_icmp_inner_src_ip(self.hexa_frame)
+
+    def get_icmp_expired_inner_dst_ip(self):
+        if self.protocol == "ICMP" and self.icmp_type == "TIME EXCEEDED":
+            return FrameHandler.parse_icmp_inner_dst_ip(self.hexa_frame)

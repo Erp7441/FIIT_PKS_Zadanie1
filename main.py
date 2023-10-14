@@ -11,7 +11,7 @@ from utils.Args import Args
 cwd = path.dirname(path.realpath(__file__))
 
 
-# TODO:: Handle typical UDP (TFTP) app protocol port negotiation
+# TODO:: Fix validation
 
 def main():
     # Arguments were passed
@@ -24,6 +24,9 @@ def main():
         start(args.file)
         return
     elif args.test_files is not None and args.validator_path is not None and args.schema_path is not None:
+        if args.protocol is not None:
+            run_tests(args.test_files, args.validator_path, args.schema_path, args.protocol)
+            return
         run_tests(args.test_files, args.validator_path, args.schema_path)
         return
 
@@ -61,14 +64,15 @@ def start(pcap_file_path: str, protocol=None):
 
 # Used for debugging purposes. Analyzes and tests the validity of all PCAP files. Set the variables inside the function
 # to the appropriate values before executing.
-def run_tests(pcap_folder, validator_path, schema_path):
+def run_tests(pcap_folder, validator_path, schema_path, protocol=None):
     from utils.Tests import Tests
 
     yaml_folder = cwd + '/export'
     tests = Tests(pcap_folder, yaml_folder, validator_path, schema_path)
 
     # Running on all files
-    tests.run_on_files()
+    tests.run_on_files(protocol)
+    print('\n', end='')
 
     # Testing all files
     tests.test_yaml_files()

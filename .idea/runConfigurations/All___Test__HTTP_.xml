@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="trace-25" type="PythonConfigurationType" factoryName="Python" folderName="Traces">
+  <configuration default="false" name="All + Test (HTTP)" type="PythonConfigurationType" factoryName="Python" folderName="All + Tests">
     <module name="PKS_Zadanie1" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
@@ -7,14 +7,13 @@
       <env name="PYTHONUNBUFFERED" value="1" />
     </envs>
     <option name="SDK_HOME" value="" />
-    <option name="SDK_NAME" value="Python 3.10" />
     <option name="WORKING_DIRECTORY" value="" />
-    <option name="IS_MODULE_SDK" value="false" />
+    <option name="IS_MODULE_SDK" value="true" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
     <option name="SCRIPT_NAME" value="main.py" />
-    <option name="PARAMETERS" value="-f &quot;./samples/trace-25.pcap&quot;" />
+    <option name="PARAMETERS" value="--test &quot;$PROJECT_DIR$/samples&quot; --validator-path &quot;$PROJECT_DIR$/../pks-course/202324/assignments/1_network_communication_analyzer/validator_yaml_output/validator.py&quot; --schema-path &quot;$PROJECT_DIR$/schemas/schema-all-with-unknown.yaml&quot; -p HTTP" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
     <option name="MODULE_MODE" value="false" />

@@ -42,7 +42,10 @@ class YAMLHandler:
         # Sorting the dict keys to match YAML schema
         packets_dict_list = YAMLHandler._sort_dictionary(packets_dict_list)
 
-        pcap_file_dict["packets"] = packets_dict_list
+        if packets_dict_list is not None and len(packets_dict_list) > 0:
+            pcap_file_dict["packets"] = packets_dict_list
+        else:
+            pcap_file_dict.pop("packets")
 
         # Opening file
         with open(path_to_yaml_file, "w") as file:

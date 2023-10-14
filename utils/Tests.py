@@ -1,5 +1,5 @@
 from datetime import datetime
-from os import listdir, system, path
+from os import listdir, system, path, makedirs
 from re import sub
 
 from Pcap import Pcap
@@ -47,26 +47,36 @@ class Tests:
             files[index] = base_dir + '/' + file
         return files
 
-    def run_on_files(self):
+    def run_on_files(self, protocol=None):
         # Runs PCAP analyzer on a list of PCAP files
 
         if self.pcap_files is None:
             return
 
         for file in self.pcap_files:
-            self._start(file)
+            self._start(file, protocol)
 
-    def _start(self, pcap_file_path: str):
+    def _start(self, pcap_file_path: str, protocol=None):
         # Runs pcap analyzer on a PCAP file
 
+        # Creates export dir
+        if not path.exists(self.yaml_folder_path):
+            makedirs(self.yaml_folder_path + "/export")
+
         pcap_file = Pcap(pcap_file_path)
+
+        if protocol is not None:
+            result = pcap_file.filter_out(protocol)
+            if not result:
+                print("Error invalid protocol")
+                return
 
         # Generates YAMl file from PCAP data
         date_and_time = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
         yaml_name = pcap_file.pcap_name
         yaml_name = sub('(.*\/)|(\.pcap)', '', yaml_name)
         yaml_name = yaml_name+"__"+date_and_time+".yaml"
-        YAMLHandler.export_pcap(pcap_file, self.yaml_folder_path+"/"+yaml_name)
+        YAMLHandler.export_pcap(pcap_file, "./export/"+yaml_name)
         print("File", "\""+yaml_name+"\"", "exported to", "\"" + self.yaml_folder_path + "\"")
 
     def test_yaml_files(self):

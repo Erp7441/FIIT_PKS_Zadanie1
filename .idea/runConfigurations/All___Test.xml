@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="All + Test" type="PythonConfigurationType" factoryName="Python">
+  <configuration default="false" name="All + Test" type="PythonConfigurationType" factoryName="Python" folderName="All + Tests">
     <module name="PKS_Zadanie1" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />

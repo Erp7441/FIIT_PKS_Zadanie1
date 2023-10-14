@@ -14,6 +14,10 @@ To run and test all PCAP files within a folder run
 python main.py --test "./samples" --validator-path 
 "./validator.py" --schema-path "./schemas/schema-all-with-unknown.yaml"
 ```
+Filter out protocol
+```bash
+python main.py -f "./samples/trace-15.pcap" -p HTTP
+```
 
 
 ## Used libraries

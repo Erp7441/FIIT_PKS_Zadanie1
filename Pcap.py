@@ -104,10 +104,11 @@ class Pcap:
                 pass
 
         if protocol_type == "TCP" or protocol_type == "BOTH":
+            self.packets = new_packet_list
             comm_dict = self.find_tcp_conversations(new_packet_list)
             self.communication, self.partial_communication = comm_dict["Complete"], comm_dict["Incomplete"]
         elif protocol_type == "UDP" or protocol_type == "BOTH":
-            comm_dict = self.find_udp_conversations()
+            comm_dict = self.find_udp_conversations(protocol)
             self.communication, self.partial_communication = comm_dict["Complete"], comm_dict["Incomplete"]
         elif protocol_type == "ICMP":
             pass
@@ -172,7 +173,8 @@ class Pcap:
             else:
                 conversation_dict["Incomplete"].append(conversation)
 
-        conversation_dict["Incomplete"] = conversation_dict["Incomplete"][0]
+        if len(conversation_dict["Incomplete"] > 0):
+            conversation_dict["Incomplete"] = conversation_dict["Incomplete"][0]
         return conversation_dict
 
     @staticmethod
@@ -202,17 +204,36 @@ class Pcap:
     ####################################################
     # UDP shenanigans
     ####################################################
-    def find_udp_conversations(self):
+    def find_udp_conversations(self, app_protocol):
         udp_packets = []
         for packet in self.packets:
-            if packet.ether_type == "IPv4" and packet.protocol == "UDP":
-                udp_packets.append(packet)
+            try:
+                if (
+                    packet.ether_type == "IPv4" and
+                    packet.protocol == "UDP" and
+                    packet.app_protocol == "Unknown" or
+                    packet.app_protocol == app_protocol
+                ):
+                    udp_packets.append(packet)
+            except AttributeError:
+                pass
+
+        self.packets = udp_packets
 
         udp_conversations = []
+        processed = []
         for packet in udp_packets:
+            if packet in processed:
+                continue
+
             conv = Pcap.find_udp_conversation(udp_packets, packet)
             if conv is not None:
                 udp_conversations.append(conv)
+                for udp_packet in conv['Conversation']:
+                    processed.append(udp_packet)
+                continue
+
+            processed.append(packet)
 
         formatted_output = Pcap.sort_udp_conversations(udp_conversations)
 
@@ -249,14 +270,12 @@ class Pcap:
                 if udp_packet.app_protocol == "Unknown":
                     udp_packet.app_protocol = init_packet.app_protocol
 
-                if udp_packet.len_frame_pcap < size:
+                # TODO:: Trace 15 UDP stream 4 is not being correctly handled
+                opcode = int(FrameHandler.parse_tftp_opcode(udp_packet.hexa_frame), 16)
+                if udp_packet.len_frame_pcap < size or opcode == 5:
                     last = True
-                elif last:
-                    if init_packet.app_protocol == "TFTP":
-                        opcode = int(FrameHandler.parse_tftp_opcode(udp_packet.hexa_frame), 16)
-                        if opcode != 4:
-                            last = False
-                    break  # Last packet of communication
+            elif last:
+                break  # Last packet of communication
 
         return {
             "Conversation": udp_conversation,
@@ -288,7 +307,8 @@ class Pcap:
 
             formatted_output[target].append(formatted_dict)
 
-        formatted_output['Incomplete'] = formatted_output['Incomplete'][0]
+        if len(formatted_output['Incomplete']) > 0:
+            formatted_output['Incomplete'] = formatted_output['Incomplete'][0]
         return formatted_output
 
     ####################################################
@@ -297,14 +317,17 @@ class Pcap:
     def find_arp_conversations(self):
         replies = []
         requests = []
+        everything = []
         for packet in self.packets:
             if packet.frame_type == Constants.FRAME_TYPE_ETHERNET_II and packet.ether_type == "ARP":
                 if packet.arp_opcode == 'REQUEST':
                     requests.append(packet)
+                    everything.append(packet)
                 elif packet.arp_opcode == 'REPLY':
                     replies.append(packet)
+                    everything.append(packet)
 
-
+        self.packets = everything
 
         arp_conversations = Pcap.sort_arp_conversations(replies, requests)
         return arp_conversations

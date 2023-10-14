@@ -119,12 +119,12 @@ class YAMLHandler:
 
         partial_comm_packet_dict = []
 
-        if type(pcap_file.partial_communication) is list:
+        if type(pcap_file.partial_communication) is list and len(pcap_file.partial_communication) > 0:
             for packet in pcap_file.partial_communication:
                 partial_comm_packet_dict.append(packet.__dict__)
             pcap_file.partial_communication = YAMLHandler.sort_dictionary(partial_comm_packet_dict)
 
-        elif type(pcap_file.partial_communication) is dict:
+        elif type(pcap_file.partial_communication) is dict and len(pcap_file.partial_communication) > 0:
             for packet in pcap_file.partial_communication["packets"]:
                 partial_comm_packet_dict.append(packet.__dict__)
             pcap_file.partial_communication["packets"] = YAMLHandler.sort_dictionary(partial_comm_packet_dict)

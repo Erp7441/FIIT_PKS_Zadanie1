@@ -103,20 +103,22 @@ class Pcap:
             except AttributeError:
                 pass
 
+        comm_dict = None
         if protocol_type == "TCP" or protocol_type == "BOTH":
             self.packets = new_packet_list
             comm_dict = self.find_tcp_conversations(new_packet_list)
-            self.communication, self.partial_communication = comm_dict["Complete"], comm_dict["Incomplete"]
         elif protocol_type == "UDP" or protocol_type == "BOTH":
             comm_dict = self.find_udp_conversations(protocol)
-            self.communication, self.partial_communication = comm_dict["Complete"], comm_dict["Incomplete"]
         elif protocol_type == "ICMP":
-            pass
             # TODO:: Add ICMP
+            pass
         elif protocol_type == "ARP":
             comm_dict = self.find_arp_conversations()
-            self.communication, self.partial_communication = comm_dict["Complete"], comm_dict["Incomplete"]
-            # TODO:: Add ARP
+
+        if len(comm_dict['Complete']) > 0:
+            self.communication = comm_dict["Complete"]
+        if len(comm_dict['Incomplete']) > 0:
+            self.partial_communication = comm_dict["Incomplete"]
 
         return True
 
@@ -173,7 +175,7 @@ class Pcap:
             else:
                 conversation_dict["Incomplete"].append(conversation)
 
-        if len(conversation_dict["Incomplete"] > 0):
+        if len(conversation_dict["Incomplete"]) > 0:
             conversation_dict["Incomplete"] = conversation_dict["Incomplete"][0]
         return conversation_dict
 

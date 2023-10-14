@@ -81,7 +81,11 @@ class ICMP:
         for i, packet in enumerate(packets):
             if packet in processed:
                 continue
-            elif packet.icmp_type == "ECHO REQUEST" and packets[i + 1].icmp_type == "ECHO REPLY":
+            elif (
+                    packet.icmp_type == "ECHO REQUEST"
+                    and i + 1 <= len(packets) - 1
+                    and packets[i + 1].icmp_type == "ECHO REPLY"
+            ):
                 icmp_pairs.append([packet, packets[i + 1]])
                 processed += [packet, packets[i + 1]]
             else:

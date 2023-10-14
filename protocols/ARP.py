@@ -45,9 +45,15 @@ class ARP:
         # Remove frames that are in pairs from the initial arrays
         for frame in complete_ungrouped:
             if frame.arp_opcode == 'REQUEST':
-                requests.remove(frame)
+                try:
+                    requests.remove(frame)
+                except ValueError:
+                    pass
             elif frame.arp_opcode == 'REPLY':
-                replies.remove(frame)
+                try:
+                    replies.remove(frame)
+                except ValueError:
+                    pass
 
         # Join the two arrays together and sort them out by frame number to get 'incomplete' count
         incomplete = requests + replies

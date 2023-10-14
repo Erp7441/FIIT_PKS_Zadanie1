@@ -16,7 +16,7 @@ python main.py --test "./samples" --validator-path
 ```
 Filter out protocol
 ```bash
-python main.py -f "./samples/trace-15.pcap" -p HTTP
+python main.py -f "./samples/trace-25.pcap" -p HTTP
 ```
 
 

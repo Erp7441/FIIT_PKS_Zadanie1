@@ -56,5 +56,35 @@ class FrameEthernet(Frame):
             # ICMP stuff
             if self.protocol == "ICMP":
                 self.icmp_type = FrameHandler.parse_icmp_type(header_bytes)
-                # self.icmp_id = FrameHandler.parse_icmp_id(header_bytes)
-                # self.icmp_seq = FrameHandler.parse_icmp_seq(header_bytes)
+
+    def add_icmp_complete_fields(self):
+        if self.protocol == "ICMP":
+            # TODO:: Add time exceeded?
+
+            if self.icmp_type == "ECHO REPLY" or self.icmp_type == "ECHO REQUEST":
+                packet_bytes = str(self.hexa_frame).replace(' ', '').replace('\n', '')
+                header_bytes = packet_bytes[
+                    FrameHandler.parse_ethernet_ii_header_length() +
+                    FrameHandler.parse_ipv4_header_length(packet_bytes)::
+                ]
+
+                self.icmp_id = FrameHandler.parse_icmp_id(header_bytes)
+                self.icmp_seq = FrameHandler.parse_icmp_seq(header_bytes)
+
+    def get_icmp_id(self):
+        if self.protocol == "ICMP":
+            # TODO:: Add time exceeded?
+
+            if self.icmp_type == "ECHO REPLY" or self.icmp_type == "ECHO REQUEST":
+                packet_bytes = str(self.hexa_frame).replace(' ', '').replace('\n', '')
+                header_bytes = packet_bytes[
+                    FrameHandler.parse_ethernet_ii_header_length() +
+                    FrameHandler.parse_ipv4_header_length(packet_bytes)::
+                ]
+
+                return FrameHandler.parse_icmp_id(header_bytes)
+
+    def compare_protocol(self, protocol):
+        if self.protocol == "ICMP":
+            return self.protocol == protocol
+        return self.app_protocol == protocol

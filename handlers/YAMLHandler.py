@@ -115,7 +115,11 @@ class YAMLHandler:
             for entry in pcap_file.communication:
                 comm_packet_dict = []
                 for packet in entry["packets"]:
-                    comm_packet_dict.append(packet.__dict__)
+                    if type(packet) is list:
+                        for subentry in packet:
+                            comm_packet_dict.append(subentry.__dict__)
+                    else:
+                        comm_packet_dict.append(packet.__dict__)
                 entry["packets"] = YAMLHandler.sort_dictionary(comm_packet_dict)
         except AttributeError:
             pass
@@ -127,13 +131,21 @@ class YAMLHandler:
 
     @staticmethod
     def sort_partial_communication(pcap_file):
-        partial_comm_packet_dict = []
         if type(pcap_file.partial_communication) is list:
-            for packet in pcap_file.partial_communication:
-                partial_comm_packet_dict.append(packet.__dict__)
+            partial_comm_packet_dict = YAMLHandler.filter_partial_communication(pcap_file.partial_communication)
             pcap_file.partial_communication = YAMLHandler.sort_dictionary(partial_comm_packet_dict)
-
         elif type(pcap_file.partial_communication) is dict:
-            for packet in pcap_file.partial_communication["packets"]:
-                partial_comm_packet_dict.append(packet.__dict__)
+            partial_comm_packet_dict = YAMLHandler.filter_partial_communication(pcap_file.partial_communication[
+                                                                                "packets"])
             pcap_file.partial_communication["packets"] = YAMLHandler.sort_dictionary(partial_comm_packet_dict)
+
+    @staticmethod
+    def filter_partial_communication(partial_communication):
+        partial_comm_packet_dict = []
+        for packet in partial_communication:
+            if type(packet) is list:
+                for subentry in packet:
+                    partial_comm_packet_dict.append(subentry.__dict__)
+            else:
+                partial_comm_packet_dict.append(packet.__dict__)
+        return partial_comm_packet_dict

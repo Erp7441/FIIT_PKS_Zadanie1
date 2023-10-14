@@ -51,4 +51,5 @@ class FormatHandler:
 
     @staticmethod
     def format_ipv6(hex_string):
+        # TODO:: Implement
         pass

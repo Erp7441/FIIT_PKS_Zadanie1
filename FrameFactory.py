@@ -12,27 +12,27 @@ class FrameFactory:
 
     @staticmethod
     def create_frame(frame_number, timestamp, packet):
-        frame_type = FrameFactory.extract_ether_frame_type(packet)
+        frame_type = FrameFactory._extract_ether_frame_type(packet)
 
         # Handling undefined frame handlers
         if not frame_type:
             return
 
         # 0 index is source, 1 index is dest
-        macs = FrameFactory.extract_mac_addresses(packet)
+        macs = FrameFactory._extract_mac_addresses(packet)
 
-        length = FrameFactory.get_frame_length(packet)
-        wire_length = FrameFactory.get_frame_length(packet, True)
+        length = FrameFactory._get_frame_length(packet)
+        wire_length = FrameFactory._get_frame_length(packet, True)
 
         # Ethernet II Frame
         if frame_type == Constants.FRAME_TYPE_ETHERNET_II:
             return FrameEthernet(frame_number, macs[0], macs[1], length, wire_length, packet, timestamp)
         # 802.3 Frame
         elif frame_type == Constants.FRAME_TYPE_EOTT:
-            return FrameFactory.create_eot_frame(frame_number, macs[0], macs[1], length, wire_length, packet, timestamp)
+            return FrameFactory._create_eot_frame(frame_number, macs[0], macs[1], length, wire_length, packet, timestamp)
 
     @staticmethod
-    def create_eot_frame(frame_number, src, dest, length, wire_length, packet, timestamp):
+    def _create_eot_frame(frame_number, src, dest, length, wire_length, packet, timestamp):
         packet_bytes = packet.hex()
 
         # TODO:: Implement ISL check Destination Address (DA) Field
@@ -40,24 +40,24 @@ class FrameFactory:
         # "01-00-0C-00-00" or "03-00-0C-00-00". This address is used to signal to the receiver that the packet is in ISL format.
 
         # LLC SNAP
-        if FrameFactory.check_snap(packet_bytes):
+        if FrameFactory._check_snap(packet_bytes):
             return FrameSNAP(frame_number, src, dest, length, wire_length, packet, timestamp)
         # 802 RAW
-        elif FrameFactory.check_raw(packet_bytes):
+        elif FrameFactory._check_raw(packet_bytes):
             return FrameRAW(frame_number, src, dest, length, wire_length, packet, timestamp)
         # LLC
         else:
             return FrameLCC(frame_number, src, dest, length, wire_length, packet, timestamp)
 
     @staticmethod
-    def extract_mac_addresses(packet):
+    def _extract_mac_addresses(packet):
         packet_bytes = packet.hex()
         source_mac = FrameHandler.parse_src_mac(packet_bytes)
         destination_mac = FrameHandler.parse_dst_mac(packet_bytes)
         return source_mac, destination_mac
 
     @staticmethod
-    def extract_ether_frame_type(packet):
+    def _extract_ether_frame_type(packet):
         packet_bytes = packet.hex()
         type_bytes = FrameHandler.parse_type(packet_bytes, True)
         type_bytes = int(type_bytes, 16)
@@ -73,7 +73,7 @@ class FrameFactory:
             return None
 
     @staticmethod
-    def get_frame_length(packet, wire=False):
+    def _get_frame_length(packet, wire=False):
         if not wire:
             return len(packet)
         elif len(packet) < 60 and wire:
@@ -82,13 +82,13 @@ class FrameFactory:
             return len(packet) + 4
 
     @staticmethod
-    def check_snap(packet_bytes):
+    def _check_snap(packet_bytes):
         dsap = FrameHandler.parse_dsap(packet_bytes)
         ssap = FrameHandler.parse_ssap(packet_bytes)
         control = FrameHandler.parse_control(packet_bytes)
         return (dsap.upper() == "AA") and (ssap.upper() == "AA") and (control == "03")
 
     @staticmethod
-    def check_raw(packet_bytes):
+    def _check_raw(packet_bytes):
         ipx_header = FrameHandler.parse_ipx_header(packet_bytes)
         return (ipx_header[0].upper() == "FF") and (ipx_header[1].upper() == "FF")

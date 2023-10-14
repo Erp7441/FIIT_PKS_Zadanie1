@@ -26,7 +26,7 @@ class Tests:
 
     def __init__(self, pcap_folder_path, yaml_folder_path , validator_script_path, schema_path):
         # PCAP files folder path
-        self.pcap_files = Tests.get_paths(pcap_folder_path)
+        self.pcap_files = Tests._get_paths(pcap_folder_path)
 
         # Validator paths
         self.validator_script = validator_script_path
@@ -38,7 +38,7 @@ class Tests:
         self.yaml_folder_path = yaml_folder_path
 
     @staticmethod
-    def get_paths(base_dir: str):
+    def _get_paths(base_dir: str):
         # Lists files in a dir. Returns full path of each file
 
         files = listdir(base_dir)
@@ -54,9 +54,9 @@ class Tests:
             return
 
         for file in self.pcap_files:
-            self.start(file)
+            self._start(file)
 
-    def start(self, pcap_file_path: str):
+    def _start(self, pcap_file_path: str):
         # Runs pcap analyzer on a PCAP file
 
         pcap_file = Pcap(pcap_file_path)
@@ -75,7 +75,7 @@ class Tests:
         if self.yaml_folder_path is None:
             return
 
-        yaml_files = Tests.get_paths(self.yaml_folder_path)
+        yaml_files = Tests._get_paths(self.yaml_folder_path)
 
         for file in yaml_files:
             command = "python3  " + self.validator_script + ' -d ' + file + ' -s ' + self.schema

@@ -9,4 +9,4 @@ class Frame:
         self.src_mac = FormatHandler.format_mac(src_mac)
         self.dst_mac = FormatHandler.format_mac(dest_mac)
         self.hexa_frame = FormatHandler.format_hex_field(packet.hex())
-        #self.timestamp = timestamp # TODO:: Remove?
+        #self.timestamp = timestamp

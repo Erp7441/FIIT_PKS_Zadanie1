@@ -20,4 +20,4 @@ class FrameLCC(FrameEOT):
         except KeyError:
             self.sap = "Unknown"
 
-        # control = ByteHandler.load_bytes(packet_bytes, 16) TODO:: Remove unused variable
+        # control = ByteHandler.load_bytes(packet_bytes, 16)

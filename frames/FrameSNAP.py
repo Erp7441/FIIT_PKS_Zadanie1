@@ -11,7 +11,6 @@ class FrameSNAP(FrameLCC):
 
         packet_bytes = packet.hex()
 
-        # TODO:: remove?
         # self.vendor = TypeHandler.find_vendor_str(ByteHandler.load_bytes_range(packet_bytes, 17, 19))
 
         self.pid = TypeHandler.find_pid_str(FrameHandler.parse_pid(packet_bytes))

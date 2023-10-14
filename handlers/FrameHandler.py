@@ -10,7 +10,7 @@ class FrameHandler:
         raise TypeError("Static only class!")
 
     @staticmethod
-    def __convert_hexa_frame_to_packet_bytes__(hexa_frame):
+    def _convert_hexa_frame_to_packet_bytes(hexa_frame):
         return str(hexa_frame).replace(' ', '').replace('\n', '')
 
     @staticmethod
@@ -139,27 +139,27 @@ class FrameHandler:
 
     @staticmethod
     def parse_tftp_opcode(hexa_frame):
-        packet_bytes = FrameHandler.__convert_hexa_frame_to_packet_bytes__(hexa_frame)
+        packet_bytes = FrameHandler._convert_hexa_frame_to_packet_bytes(hexa_frame)
         return ByteHandler.load_bytes_range(packet_bytes, 42, 43)
 
     @staticmethod
     def parse_arp_target_ip(hexa_frame):
-        packet_bytes = FrameHandler.__convert_hexa_frame_to_packet_bytes__(hexa_frame)
+        packet_bytes = FrameHandler._convert_hexa_frame_to_packet_bytes(hexa_frame)
         return FormatHandler.format_ipv4(ByteHandler.load_bytes_range(packet_bytes, 38, 41))
 
     @staticmethod
     def parse_arp_target_mac(hexa_frame):
-        packet_bytes = FrameHandler.__convert_hexa_frame_to_packet_bytes__(hexa_frame)
+        packet_bytes = FrameHandler._convert_hexa_frame_to_packet_bytes(hexa_frame)
         return FormatHandler.format_mac(ByteHandler.load_bytes_range(packet_bytes, 32, 37))
 
     @staticmethod
     def parse_arp_source_ip(hexa_frame):
-        packet_bytes = FrameHandler.__convert_hexa_frame_to_packet_bytes__(hexa_frame)
+        packet_bytes = FrameHandler._convert_hexa_frame_to_packet_bytes(hexa_frame)
         return FormatHandler.format_ipv4(ByteHandler.load_bytes_range(packet_bytes, 28, 31))
 
     @staticmethod
     def parse_arp_source_mac(hexa_frame):
-        packet_bytes = FrameHandler.__convert_hexa_frame_to_packet_bytes__(hexa_frame)
+        packet_bytes = FrameHandler._convert_hexa_frame_to_packet_bytes(hexa_frame)
         return FormatHandler.format_mac(ByteHandler.load_bytes_range(packet_bytes, 22, 27))
 
     @staticmethod
@@ -172,10 +172,10 @@ class FrameHandler:
 
     @staticmethod
     def parse_icmp_inner_src_ip(hexa_frame):
-        packet_bytes = FrameHandler.__convert_hexa_frame_to_packet_bytes__(hexa_frame)
+        packet_bytes = FrameHandler._convert_hexa_frame_to_packet_bytes(hexa_frame)
         return FormatHandler.format_ipv4(ByteHandler.load_bytes_range(packet_bytes, 54, 57))
 
     @staticmethod
     def parse_icmp_inner_dst_ip(hexa_frame):
-        packet_bytes = FrameHandler.__convert_hexa_frame_to_packet_bytes__(hexa_frame)
+        packet_bytes = FrameHandler._convert_hexa_frame_to_packet_bytes(hexa_frame)
         return FormatHandler.format_ipv4(ByteHandler.load_bytes_range(packet_bytes, 58, 61))

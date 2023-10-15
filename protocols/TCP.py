@@ -10,8 +10,17 @@ class TCP:
                 tcp_packets.append(packet)
 
         tcp_conversations = []
+        processed = []
         for num, packet in enumerate(tcp_packets):
-            tcp_conversations.append(TCP._find_tcp_conversation(tcp_packets, packet, num))
+            if packet in processed:
+                continue
+
+            conv = TCP._find_tcp_conversation(tcp_packets, packet, num)
+
+            if conv is not None:
+                tcp_conversations.append(conv)
+                for packet in conv['packets']:
+                    processed.append(packet)
 
         return TCP._sort_tcp_conversations(tcp_conversations)
 
@@ -28,9 +37,6 @@ class TCP:
                     (tcp_packet.src_port in ports and tcp_packet.dst_port in ports)
             ):
                 tcp_conversation.append(tcp_packet)
-
-        for packet in tcp_conversation:
-            tcp_packets.remove(packet)
 
         return {
             "number_comm": num + 1,

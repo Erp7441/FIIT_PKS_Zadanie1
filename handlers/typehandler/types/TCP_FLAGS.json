@@ -8,7 +8,9 @@
     "FIN ACK": "0x11",
     "SYN ACK": "0x12",
     "PSH ACK": "0x18",
-    "FIN PSH": "0x09"
+    "FIN PSH": "0x09",
+    "RST ACK": "0x14",
+    "PSH RST": "0x0C"
   },
 
   "hex_to_str": {
@@ -20,6 +22,8 @@
     "0x11": "FIN ACK",
     "0x12": "SYN ACK",
     "0x18": "PSH ACK",
-    "0x09": "FIN PSH"
+    "0x09": "FIN PSH",
+    "0x14": "RST ACK",
+    "0x0C": "PSH RST"
   }
 }

@@ -1,6 +1,6 @@
 from frames.Frame import Frame
-from utils.Constants import Constants
 from handlers.FrameHandler import FrameHandler
+from utils.Constants import Constants
 
 
 class FrameEthernet(Frame):

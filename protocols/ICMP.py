@@ -1,7 +1,6 @@
-from handlers.FrameHandler import FrameHandler
-from handlers.FormatHandler import FormatHandler
 from FrameFactory import FrameFactory
-import re
+from handlers.FrameHandler import FrameHandler
+
 
 class ICMP:
 

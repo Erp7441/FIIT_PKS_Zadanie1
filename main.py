@@ -1,4 +1,3 @@
-from argparse import ArgumentParser
 from datetime import datetime
 from os import mkdir, path
 from re import sub

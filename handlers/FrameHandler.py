@@ -1,8 +1,9 @@
-from handlers.ByteHandler import ByteHandler
-from handlers.typehandler.TypeHandler import TypeHandler
-from handlers.FormatHandler import FormatHandler
-
 import re
+
+from handlers.ByteHandler import ByteHandler
+from handlers.FormatHandler import FormatHandler
+from handlers.typehandler.TypeHandler import TypeHandler
+
 
 class FrameHandler:
 

@@ -3,10 +3,10 @@ import pcap
 from FrameFactory import FrameFactory
 from frames.FrameEthernet import FrameEthernet
 from handlers.typehandler.TypeHandler import TypeHandler
-from protocols.TCP import TCP
-from protocols.UDP import UDP
 from protocols.ARP import ARP
 from protocols.ICMP import ICMP
+from protocols.TCP import TCP
+from protocols.UDP import UDP
 
 
 class Pcap:

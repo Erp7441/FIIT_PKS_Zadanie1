@@ -33,7 +33,7 @@ class TCP:
             tcp_packets.remove(packet)
 
         return {
-            "number_comm": num,
+            "number_comm": num + 1,
             "src_comm": packet.src_ip,
             "dst_comm": packet.dst_ip,
             "packets": tcp_conversation

@@ -42,7 +42,7 @@ class ICMP:
                 icmp_conversation.append(icmp_packet)
 
         return {
-            "number_comm": num,
+            "number_comm": num + 1,
             "src_comm": packet.src_ip,
             "dst_comm": packet.dst_ip,
             "packets": icmp_conversation

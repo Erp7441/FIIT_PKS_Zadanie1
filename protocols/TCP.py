@@ -67,6 +67,14 @@ class TCP:
                 completeness += 1
             elif i == 1 and packet.flags == "SYN ACK":
                 completeness += 2
+            elif i == 1 and packet.flags == "SYN":
+                # SYN + ACK is sent in separate frames
+                if (
+                    i + 2 <= len(conversation) - 1
+                    and conversation[i + 1].flags == "ACK"
+                    and conversation[i + 2] == "ACK"
+                ):
+                    completeness += 2
             elif i == 2 and packet.flags == "ACK":
                 completeness += 4
             elif i > 2 and not data and "FIN" not in packet.flags and "RST" not in packet.flags:

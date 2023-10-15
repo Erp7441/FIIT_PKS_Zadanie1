@@ -11,7 +11,7 @@ class Args:
             epilog="""
             \033[0;33mNOTE: You can either run in a single file mode using '-f' switch or multiple files mode with YAML 
             testing using 3 switches (all of the 3 are mandatory for multiple files mode) '--test', '---validator-path',
-            '--schema-path'\033[0m
+            '--schema-path'.\033[0m
             """
         )
         self.parser.add_argument("-p", "--protocol", dest="protocol", help="Protocol to lookup")

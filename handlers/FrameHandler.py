@@ -179,3 +179,26 @@ class FrameHandler:
     def parse_icmp_inner_dst_ip(hexa_frame):
         packet_bytes = FrameHandler._convert_hexa_frame_to_packet_bytes(hexa_frame)
         return FormatHandler.format_ipv4(ByteHandler.load_bytes_range(packet_bytes, 58, 61))
+
+    @staticmethod
+    def parse_ipv4_flags(packet_bytes):
+        return ByteHandler.load_bytes(packet_bytes, 20)
+
+    @staticmethod
+    def parse_ipv4_fragment_offset(packet_bytes):
+        return int(ByteHandler.load_bytes(packet_bytes, 21), 16)
+
+    @staticmethod
+    def get_fragmeted_ipv4_data(hexa_frame):
+        packet_bytes = FrameHandler._convert_hexa_frame_to_packet_bytes(hexa_frame)
+        return packet_bytes[68::]
+
+    @staticmethod
+    def parse_ethernet_ii_header(hexa_frame):
+        packet_bytes = FrameHandler._convert_hexa_frame_to_packet_bytes(hexa_frame)
+        return ByteHandler.load_bytes_range(packet_bytes, 0, 13)
+
+    @staticmethod
+    def parse_ipv4_header(hexa_frame):
+        packet_bytes = FrameHandler._convert_hexa_frame_to_packet_bytes(hexa_frame)
+        return ByteHandler.load_bytes_range(packet_bytes, 14, 33)

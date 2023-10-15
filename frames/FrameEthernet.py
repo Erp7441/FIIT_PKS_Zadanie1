@@ -55,6 +55,8 @@ class FrameEthernet(Frame):
 
             # ICMP stuff
             if self.protocol == "ICMP":
+                self.flags_mf = FrameHandler.parse_ipv4_flags(packet_bytes) == '20'
+                self.frag_offset = FrameHandler.parse_ipv4_fragment_offset(packet_bytes) * 8
                 self.icmp_type = FrameHandler.parse_icmp_type(header_bytes)
 
     def add_icmp_complete_fields(self):

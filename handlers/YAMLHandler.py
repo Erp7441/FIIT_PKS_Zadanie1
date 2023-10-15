@@ -86,6 +86,8 @@ class YAMLHandler:
             "arp_opcode",
             "src_ip",
             "dst_ip",
+            "flags_mf",
+            "frag_offset",
             "protocol",
             "src_port",
             "dst_port",

@@ -69,7 +69,7 @@ class TCP:
                 completeness += 2
             elif i == 2 and packet.flags == "ACK":
                 completeness += 4
-            elif i > 2 and not data:
+            elif i > 2 and not data and "FIN" not in packet.flags and "RST" not in packet.flags:
                 data = True
                 completeness += 8
             elif i > 2:

@@ -10,30 +10,23 @@ from utils.Args import Args
 cwd = path.dirname(path.realpath(__file__))
 
 
-# TODO:: Fix validation
-
 def main():
     # Arguments were passed
     args = Args()
 
-    if args.file is not None and args.protocol is not None:
-        start(args.file, args.protocol)
-        return
+    if (
+        args.file is not None
+        and args.test_files is not None and args.validator_path is not None and args.schema_path is not None
+    ):
+        print("\033[0;31m" + "ERROR: Too many arguments! Please read the \"NOTE\" section in help." + "\033[0m")
+        args.parser.print_help()
     elif args.file is not None:
-        start(args.file)
-        return
+        start(args.file, args.protocol)
     elif args.test_files is not None and args.validator_path is not None and args.schema_path is not None:
-        if args.protocol is not None:
-            run_tests(args.test_files, args.validator_path, args.schema_path, args.protocol)
-            return
-        run_tests(args.test_files, args.validator_path, args.schema_path)
-        return
-
-    # No arguments were passed
-    path_to_pcap_file = input("Enter path to PCAP file: ")
-    if not path.exists(path_to_pcap_file):
-        raise FileNotFoundError("Could not find PCAP file!")
-    start(path_to_pcap_file)
+        run_tests(args.test_files, args.validator_path, args.schema_path, args.protocol)
+    else:
+        print("\033[0;31m" + "ERROR: Not enough arguments!" + "\033[0m")
+        args.parser.print_help()
 
 
 # Start procedure

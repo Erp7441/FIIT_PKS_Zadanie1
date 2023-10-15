@@ -2,17 +2,27 @@ import os
 import signal
 from argparse import ArgumentParser
 
-
 class Args:
 
     def __init__(self):
         # Parsing arguments
-        self.parser = ArgumentParser(description="PCAP file analyzer by Martin Szabo")
-        self.parser.add_argument("-f", "--file", dest="file", help="Path to a PCAP file to be scanned")
-        self.parser.add_argument("--test", dest="test_files", help="Path to PCAP files folder to be tested")
-        self.parser.add_argument("--validator-path", dest="validator_path", help="Path to validator executable")
-        self.parser.add_argument("--schema-path", dest="schema_path", help="Path to schemas")
+        self.parser = ArgumentParser(
+            description="PCAP file analyzer by Martin Szabo",
+            epilog="""
+            \033[0;33mNOTE: You can either run in a single file mode using '-f' switch or multiple files mode with YAML 
+            testing using 3 switches (all of the 3 are mandatory for multiple files mode) '--test', '---validator-path',
+            '--schema-path'\033[0m
+            """
+        )
         self.parser.add_argument("-p", "--protocol", dest="protocol", help="Protocol to lookup")
+
+        single_group = self.parser.add_argument_group("Analyze single PCAP file")
+        single_group.add_argument("-f", "--file", dest="file", help="Path to a PCAP file to be scanned")
+
+        multiple_group = self.parser.add_argument_group("Analyze multiple PCAP files and test YAML validity")
+        multiple_group.add_argument("--test", dest="test_files", help="Path to PCAP files folder to be tested")
+        multiple_group.add_argument("--validator-path", dest="validator_path", help="Path to validator executable")
+        multiple_group.add_argument("--schema-path", dest="schema_path", help="Path to schema")
 
         args_dict = self.parser.parse_args().__dict__
 

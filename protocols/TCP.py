@@ -11,11 +11,11 @@ class TCP:
 
         tcp_conversations = []
         processed = []
-        for num, packet in enumerate(tcp_packets):
+        for packet in tcp_packets:
             if packet in processed:
                 continue
 
-            conv = TCP._find_tcp_conversation(tcp_packets, packet, num)
+            conv = TCP._find_tcp_conversation(tcp_packets, packet, len(tcp_conversations))
 
             if conv is not None:
                 tcp_conversations.append(conv)

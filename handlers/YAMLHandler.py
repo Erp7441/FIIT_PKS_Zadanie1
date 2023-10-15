@@ -57,7 +57,7 @@ class YAMLHandler:
     @staticmethod
     def _format_yaml(path_to_yaml_file: str):
 
-        # Handling "|"
+        # Handling formatting details
         with open(path_to_yaml_file, "r+") as file:
             data = file.read()
             data = data.replace("hexa_frame: |-", "hexa_frame: |")
@@ -74,6 +74,8 @@ class YAMLHandler:
     # Reordering attributes
     @staticmethod
     def _sort_dictionary(packets_dict_list):
+
+        # List of attributes to be printed into YAML
         order = [
             "frame_number",
             "len_frame_pcap",

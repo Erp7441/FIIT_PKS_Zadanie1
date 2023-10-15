@@ -11,7 +11,7 @@ class ICMP:
     @staticmethod
     def find_icmp_conversations(packets):
         # TODO:: Disable or enable?
-        packets = ICMP._find_and_rebuild_fragmented_packets(packets)
+        # packets = ICMP._find_and_rebuild_fragmented_packets(packets)
 
         icmp_conversations = []
         processed = []
@@ -114,15 +114,19 @@ class ICMP:
         fragmented = False
         fragments = []
         rebuilt_packets = []
+        all_fragments = []
 
         for packet in packets:
             if packet.flags_mf:
                 fragments.append(packet)
+                all_fragments.append(packet)
                 fragmented = True
             elif fragmented and packet.flags_mf:
                 fragments.append(packet)
+                all_fragments.append(packet)
             elif fragmented and not packet.flags_mf:
                 fragments.append(packet)
+                all_fragments.append(packet)
                 rebuilt_packets.append({
                     "packet": ICMP._build_fragmented_packet(fragments),
                     "fragments": fragments.copy()
@@ -131,11 +135,17 @@ class ICMP:
                 fragments = []
 
         new_packets = []
-        skip = False
+        for packet in packets:
+            if packet in all_fragments:
+                continue
+            else:
+                new_packets.append(packet)
+
         for rebuilt_packet in rebuilt_packets:
-            for packet in packets:
-                if packet in rebuilt_packet['fragments']:
-                    pass
+            new_packets.append(rebuilt_packet['packet'])
+        new_packets.sort(key=lambda f: f.frame_number)
+
+        return new_packets
 
 
     @staticmethod

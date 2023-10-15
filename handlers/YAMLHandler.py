@@ -3,7 +3,6 @@ from ruamel.yaml import YAML
 from Pcap import Pcap
 
 
-# TODO:: Remove?
 # Strips ending "..." and new lines from a data stream
 def strip_end(stream):
     if stream.endswith("\n...\n"):

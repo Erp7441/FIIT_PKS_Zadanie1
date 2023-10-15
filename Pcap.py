@@ -96,7 +96,6 @@ class Pcap:
         if protocol_type is None:
             return False  # Invalid protocol
 
-        # TODO:: Figure out where you need this and where you don't
         # Filtering
         new_packet_list = []
         for packet in self.packets:

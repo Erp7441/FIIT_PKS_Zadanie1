@@ -51,5 +51,14 @@ class FormatHandler:
 
     @staticmethod
     def format_ipv6(hex_string):
-        # TODO:: Implement
-        pass
+        substring = re.findall("(....)", hex_string)
+
+        for i, string in enumerate(substring):
+            substring[i] = string.lstrip('0')
+
+        address = substring.pop(0)+"::"
+        while '' in substring:
+            substring.remove('')
+        substring = ':'.join(substring)
+        address += substring
+        return address

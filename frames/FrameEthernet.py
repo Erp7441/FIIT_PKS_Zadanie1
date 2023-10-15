@@ -10,12 +10,9 @@ class FrameEthernet(Frame):
 
         packet_bytes = packet.hex()
 
-        # TODO:: Move what you can to Frame class?
-
         self.ether_type = FrameHandler.parse_type(packet_bytes)
 
         if (
-            self.ether_type != "IPv6" and
             self.ether_type != "LLDP" and
             self.ether_type != "ECTP" and
             self.ether_type != "Unknown"

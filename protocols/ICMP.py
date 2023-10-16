@@ -80,10 +80,11 @@ class ICMP:
                 conversation_dict["Incomplete"].append(conversation)
 
         if len(conversation_dict["Incomplete"]) > 0:
-            conversation_dict["Incomplete"] = conversation_dict["Incomplete"][0]
+            conversation_dict["Incomplete"] = [conversation_dict["Incomplete"][0]]
+
             try:
-                conversation_dict["Incomplete"].pop('src_comm')
-                conversation_dict["Incomplete"].pop('dst_comm')
+                conversation_dict["Incomplete"][0].pop('src_comm')
+                conversation_dict["Incomplete"][0].pop('dst_comm')
             except KeyError:
                 pass
         return conversation_dict

@@ -110,10 +110,10 @@ class UDP:
             formatted_output[target].append(formatted_dict)
 
         if len(formatted_output['Incomplete']) > 0:
-            formatted_output['Incomplete'] = formatted_output['Incomplete'][0]
+            formatted_output['Incomplete'] = [formatted_output['Incomplete'][0]]
             try:
-                formatted_output["Incomplete"].pop('src_comm')
-                formatted_output["Incomplete"].pop('dst_comm')
+                formatted_output["Incomplete"][0].pop('src_comm')
+                formatted_output["Incomplete"][0].pop('dst_comm')
             except KeyError:
                 pass
         return formatted_output

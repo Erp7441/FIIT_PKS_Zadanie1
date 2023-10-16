@@ -57,7 +57,11 @@ class ARP:
 
         # Join the two arrays together and sort them out by frame number to get 'incomplete' count
         incomplete = requests + replies
-        incomplete.sort(key=lambda f: f.frame_number)
+        if incomplete is not None and len(incomplete) > 0:
+            incomplete.sort(key=lambda f: f.frame_number)
+            incomplete = [{
+                "packets": incomplete
+            }]
 
         return {
             "Complete": complete,

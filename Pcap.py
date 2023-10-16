@@ -118,8 +118,8 @@ class Pcap:
             comm_dict = ARP.find_arp_conversations(self)
 
         if len(comm_dict['Complete']) > 0:
-            self.communication = comm_dict["Complete"]
+            self.complete_comms = comm_dict["Complete"]
         if len(comm_dict['Incomplete']) > 0:
-            self.partial_communication = comm_dict["Incomplete"]
+            self.partial_comms = comm_dict["Incomplete"]
 
         return True

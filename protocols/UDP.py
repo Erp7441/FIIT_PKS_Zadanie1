@@ -111,4 +111,9 @@ class UDP:
 
         if len(formatted_output['Incomplete']) > 0:
             formatted_output['Incomplete'] = formatted_output['Incomplete'][0]
+            try:
+                formatted_output["Incomplete"].pop('src_comm')
+                formatted_output["Incomplete"].pop('dst_comm')
+            except KeyError:
+                pass
         return formatted_output

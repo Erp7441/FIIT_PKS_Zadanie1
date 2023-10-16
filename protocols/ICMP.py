@@ -81,6 +81,11 @@ class ICMP:
 
         if len(conversation_dict["Incomplete"]) > 0:
             conversation_dict["Incomplete"] = conversation_dict["Incomplete"][0]
+            try:
+                conversation_dict["Incomplete"].pop('src_comm')
+                conversation_dict["Incomplete"].pop('dst_comm')
+            except KeyError:
+                pass
         return conversation_dict
 
     @staticmethod

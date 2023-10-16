@@ -65,7 +65,7 @@ class YAMLHandler:
             data = data.replace("  - node:", "\n  - node:")
             data = data.replace("ipv4_senders:\n\n", "ipv4_senders:\n")
             data = data.replace("max_send_packets_by:", "\nmax_send_packets_by:")
-            data = data.replace("\ncommunication:", "\n\ncommunication:")
+            data = data.replace("\ncomplete_comms:", "\n\ncomplete_comms:")
             file.close()
 
         with open(path_to_yaml_file, "w") as file:
@@ -118,7 +118,7 @@ class YAMLHandler:
     def _sort_communications(pcap_file):
         try:
             # Comm and partial comm section packets
-            for entry in pcap_file.communication:
+            for entry in pcap_file.complete_comms:
                 comm_packet_dict = []
                 for packet in entry["packets"]:
                     if type(packet) is list:
@@ -131,27 +131,15 @@ class YAMLHandler:
             pass
 
         try:
-            YAMLHandler._sort_partial_communication(pcap_file)
+            # Comm and partial comm section packets
+            for entry in pcap_file.partial_comms:
+                comm_packet_dict = []
+                for packet in entry["packets"]:
+                    if type(packet) is list:
+                        for subentry in packet:
+                            comm_packet_dict.append(subentry.__dict__)
+                    else:
+                        comm_packet_dict.append(packet.__dict__)
+                entry["packets"] = YAMLHandler._sort_dictionary(comm_packet_dict)
         except AttributeError:
             pass
-
-    @staticmethod
-    def _sort_partial_communication(pcap_file):
-        if type(pcap_file.partial_communication) is list:
-            partial_comm_packet_dict = YAMLHandler._filter_partial_communication(pcap_file.partial_communication)
-            pcap_file.partial_communication = YAMLHandler._sort_dictionary(partial_comm_packet_dict)
-        elif type(pcap_file.partial_communication) is dict:
-            partial_comm_packet_dict = YAMLHandler._filter_partial_communication(pcap_file.partial_communication[
-                                                                                "packets"])
-            pcap_file.partial_communication["packets"] = YAMLHandler._sort_dictionary(partial_comm_packet_dict)
-
-    @staticmethod
-    def _filter_partial_communication(partial_communication):
-        partial_comm_packet_dict = []
-        for packet in partial_communication:
-            if type(packet) is list:
-                for subentry in packet:
-                    partial_comm_packet_dict.append(subentry.__dict__)
-            else:
-                partial_comm_packet_dict.append(packet.__dict__)
-        return partial_comm_packet_dict

@@ -17,7 +17,7 @@ class Args:
             """
         )
         self.parser.add_argument("-p", "--protocol", dest="protocol", help="Protocol to lookup")
-        self.parser.add_argument("-i", dest="cdp", help="CDP filtracia")
+        self.parser.add_argument("-i", dest="cdp", help="CDP filtracia MUSI BYT NASTAVENY NA 1tku")
 
         single_group = self.parser.add_argument_group("Analyze single PCAP file")
         single_group.add_argument("-f", "--file", dest="file", help="Path to a PCAP file to be scanned")

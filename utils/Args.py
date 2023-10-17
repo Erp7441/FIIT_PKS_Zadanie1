@@ -4,6 +4,8 @@ from argparse import ArgumentParser
 
 class Args:
 
+    cdp = False
+
     def __init__(self):
         # Parsing arguments
         self.parser = ArgumentParser(
@@ -15,6 +17,7 @@ class Args:
             """
         )
         self.parser.add_argument("-p", "--protocol", dest="protocol", help="Protocol to lookup")
+        self.parser.add_argument("-i", dest="cdp", help="CDP filtracia")
 
         single_group = self.parser.add_argument_group("Analyze single PCAP file")
         single_group.add_argument("-f", "--file", dest="file", help="Path to a PCAP file to be scanned")
@@ -25,6 +28,9 @@ class Args:
         multiple_group.add_argument("--schema-path", dest="schema_path", help="Path to schema")
 
         args_dict = self.parser.parse_args().__dict__
+
+        if args_dict["cdp"] is not None:
+            Args.cdp = True
 
         for k, v in args_dict.items():
             setattr(self, k, v)
@@ -53,3 +59,4 @@ class Args:
             print("Do you wish to continue? (y/n): ", end='')
             response = input().upper()
         return response == 'Y'
+

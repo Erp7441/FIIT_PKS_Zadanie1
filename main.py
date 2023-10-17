@@ -9,6 +9,7 @@ from utils.Args import Args
 # Current working directory of main file
 cwd = path.dirname(path.realpath(__file__))
 
+## DOIMPLEMENTACIA Uvedte pocet vsetkych ramcov vo vzorke s protokolom CDP 802.3 LLC
 
 def main():
     # Arguments were passed
@@ -38,6 +39,9 @@ def start(pcap_file_path: str, protocol=None):
         mkdir(cwd + "/export")
 
     pcap_file = Pcap(pcap_file_path)
+
+    if Args.cdp:
+        pcap_file.filter_out(None, True)
 
     if protocol is not None:
         result = pcap_file.filter_out(protocol)

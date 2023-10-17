@@ -1,6 +1,7 @@
 from ruamel.yaml import YAML
 
 from Pcap import Pcap
+from utils.Args import Args
 
 
 # Strips ending "..." and new lines from a data stream
@@ -48,6 +49,15 @@ class YAMLHandler:
 
         # Opening file
         with open(path_to_yaml_file, "w") as file:
+            if Args.cdp:
+                try:
+                    # Removni z pcap file dict ipv4 senders max send packets by a daj tam number_frames
+                    pcap_file_dict.pop("ipv4_senders")
+                    pcap_file_dict.pop('max_send_packets_by')
+                    pcap_file_dict["number_frames"] = len(pcap_file_dict["packets"])
+                except KeyError:
+                    pass
+
             # Dumping YAML
             YAMLHandler.yaml.dump(pcap_file_dict, file, transform=strip_end)
             file.close()

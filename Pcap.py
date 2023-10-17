@@ -7,6 +7,7 @@ from protocols.ARP import ARP
 from protocols.ICMP import ICMP
 from protocols.TCP import TCP
 from protocols.UDP import UDP
+from utils.Args import Args
 
 
 class Pcap:
@@ -90,7 +91,20 @@ class Pcap:
         else:
             return None
 
-    def filter_out(self, protocol: str):
+    def filter_out(self, protocol: str, cdp=False):
+        if protocol is None and cdp:
+            # Filtruj CDP
+            new_packet_list = []
+            for packet in self.packets:
+                try:
+                    if packet.pid == "CDP":
+                        new_packet_list.append(packet)
+                except AttributeError:
+                    pass
+
+            self.packets = new_packet_list
+            return True
+
         # Validating
         protocol_type = Pcap._get_protocol_type(protocol)
         if protocol_type is None:
